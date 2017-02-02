@@ -5,9 +5,9 @@
 
     public bool IsObservableByAll { get; set; }
     public DominoDirection IsHorizontal { get; set; }
-    public DominoOwnership Ownership { get; set; }
+    public GameRole Ownership { get; set; }
 
-    Domino(int value1, int value2, bool isObservableByAll, DominoDirection isHorizontal, DominoOwnership ownership)
+    Domino(int value1, int value2, bool isObservableByAll, DominoDirection isHorizontal, GameRole ownership)
     {
         Value1 = value1;
         Value2 = value2;
