@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-public class CardTile
+public class DominoTile
 {
     public List<Domino> Dominoes { get; private set; }
 
-    public CardTile()
+    public DominoTile()
     {
         Dominoes = new List<Domino>(28);
     }

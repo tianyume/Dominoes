@@ -4,15 +4,15 @@
     public int Value2 { get; private set; }
 
     public bool IsObservableByAll { get; set; }
-    public DominoDirection IsHorizontal { get; set; }
+    public DominoDirection Direction { get; set; }
     public GameRole Ownership { get; set; }
 
-    Domino(int value1, int value2, bool isObservableByAll, DominoDirection isHorizontal, GameRole ownership)
+    Domino(int value1, int value2, bool isObservableByAll, DominoDirection direction, GameRole ownership)
     {
         Value1 = value1;
         Value2 = value2;
         IsObservableByAll = isObservableByAll;
-        IsHorizontal = isHorizontal;
+        Direction = direction;
         Ownership = ownership;
     }
 }

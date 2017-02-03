@@ -5,7 +5,7 @@
     public bool IsGameEnded { get; private set; }
     public GameRole CurrentGameRole { get; private set; }
 
-    private CardTile boneyard = new CardTile();
+    private DominoTile boneyard = new DominoTile();
     private Player player1 = new Player();
     private Player player2 = new Player();
     private History history = new History();
@@ -14,16 +14,16 @@
     {
         IsGameEnded = false;
         CurrentGameRole = GameRole.Player1;
-        CardTileShuffle();
-        DistributeCard();
+        Shuffle();
+        Deal();
     }
 
-    private void CardTileShuffle()
+    private void Shuffle()
     {
 
     }
 
-    private void DistributeCard()
+    private void Deal()
     {
 
     }
