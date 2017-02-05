@@ -7,7 +7,7 @@
     public DominoDirection Direction { get; set; }
     public GameRole Ownership { get; set; }
 
-    Domino(int value1, int value2, bool isObservableByAll, DominoDirection direction, GameRole ownership)
+    public Domino(int value1, int value2, bool isObservableByAll, DominoDirection direction, GameRole ownership)
     {
         Value1 = value1;
         Value2 = value2;
