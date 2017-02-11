@@ -5,14 +5,15 @@ using System.Collections.Generic;
 public class Game
 {
     public const int MaxScore = 150;
-    public const int TILE = 6;
+	private const int MAXNUM = 6;
+	private const int TILE = 28;
 
     public bool IsGameEnded { get; private set; }
 
     public GameRole CurrentGameRole { get; private set; }
 //	public DominoTile Boneyard { get; private set; }
 	public DominoTile Tile { get; private set; }
-	public LinkedList<Domino> Boneyard { get; private set; }
+//	public LinkedList<Domino> Boneyard { get; private set; }
 	public History History { get; private set; }
 
     private Player player1 = new Player();
@@ -22,7 +23,6 @@ public class Game
     {
         IsGameEnded = false;
         CurrentGameRole = GameRole.Player1;
-//		Boneyard = new DominoTile();
 		History = new History();
 
         Init();
@@ -33,41 +33,45 @@ public class Game
 
     private void Init()
     {
-        for (int i = 0; i <= TILE; i++)
+        for (int i = 0; i <= MAXNUM; i++)
         {
-            for (int j = i; j <= TILE; j++)
+            for (int j = i; j <= MAXNUM; j++)
             {
-//                Domino temp = new Domino(i, j);
-//				Boneyard.Dominoes.Add(temp);
+                Domino temp = new Domino(i, j);
+				Tile.Dominoes.Add (temp);
             }
         }
     }
     
     private void Shuffle()
     {
-//		Boneyard.Dominoes.Shuffle();
+		Tile.Dominoes.Shuffle();
     }
 
     private void Deal(int numbertiles, GameRole role)
     {
-//		int n = Boneyard.Dominoes.Count;
+		int n = TILE;
         for (int i = 0; i < numbertiles; i++)
         {
-            //boneyard.Dominoes.Shuffle();
-//			Domino temp = Boneyard.Dominoes[n - 1];
-//			Boneyard.Dominoes.RemoveAt(n - 1);
-//            player1.Dominoes.AddFirst(temp);
-
+			Domino temp;
+			for(int j = 0; j < n; j++){
+				if (Tile.Dominoes[j].Ownership == GameRole.BoneYard) {
+					temp = Tile.Dominoes[j];
+				}
+			}
             if (role == GameRole.Player1)
             {
-//                player1.Dominoes.AddFirst(temp);
+				temp.Ownership = GameRole.Player1;
+				player1.Dominoes.AddLast(temp);
             }
             if (role == GameRole.Player2)
             {
-//                player2.Dominoes.AddFirst(temp);
-            }            
-        }
-        
+				temp.Ownership = GameRole.Player2;
+                player2.Dominoes.AddLast(temp);
+            }
+			// Shuffle every time or not ??
+			Shuffle();
+        }        
     }
 
 	public bool PlayDomino(GameRole role, Domino dominoInHand, Domino dominoOnBoard)
@@ -118,7 +122,15 @@ public class Game
 
     public void Reset()
     {
-
+		for (int i = 0; i < TILE; i++)
+		{
+			Tile.Dominoes[i].Ownership = GameRole.BoneYard;			
+		}
+		player1.Dominoes.Clear();
+		player2.Dominoes.Clear();
+		// clear history
+		History.HorizontalDominoes.Clear();
+		History.VerticalDominoes.Clear();
 	}
 
 	private Player GetCurrentPlayer()
