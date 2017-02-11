@@ -11,9 +11,7 @@ public class Game
     public bool IsGameEnded { get; private set; }
 
     public GameRole CurrentGameRole { get; private set; }
-//	public DominoTile Boneyard { get; private set; }
 	public DominoTile Tile { get; private set; }
-//	public LinkedList<Domino> Boneyard { get; private set; }
 	public History History { get; private set; }
 
     private Player player1 = new Player();
@@ -53,7 +51,7 @@ public class Game
 		int n = TILE;
         for (int i = 0; i < numbertiles; i++)
         {
-			Domino temp;
+            Domino temp = null;
 			for(int j = 0; j < n; j++){
 				if (Tile.Dominoes[j].Ownership == GameRole.BoneYard) {
 					temp = Tile.Dominoes[j];
@@ -74,6 +72,66 @@ public class Game
         }        
     }
 
+	public LinkedList<Domino> GetMovableDominoes(GameRole role)
+	{
+		if (role != CurrentGameRole)
+		{
+			return null;
+		}
+		LinkedList<Domino> dominoes = new LinkedList<Domino>();
+		Player currentPlayer = GetCurrentPlayer();
+		for (LinkedListNode<Domino> node = currentPlayer.Dominoes.First; node != null; node = node.Next)
+		{
+			Domino domino = node.Value;
+			if (History.HorizontalDominoes.Count == 0)
+			{
+				dominoes.AddLast(domino);
+				continue;
+			}
+			Domino firstHorizontalDomino = History.HorizontalDominoes.First.Value;
+			if (firstHorizontalDomino.Placement.LeftValue == domino.Value1 || firstHorizontalDomino.Placement.LeftValue == domino.Value2)
+			{
+				dominoes.AddLast(domino);
+				continue;
+			}
+			Domino lastHorizontalDomino = History.HorizontalDominoes.Last.Value;
+			if (lastHorizontalDomino.Placement.RightValue == domino.Value1 || lastHorizontalDomino.Placement.RightValue == domino.Value2)
+			{
+				dominoes.AddLast(domino);
+				continue;
+			}
+			if (History.VerticalDominoes.Count == 0)
+			{
+				continue;
+			}
+			Domino firstVerticalDomino = History.VerticalDominoes.First.Value;
+			if (firstVerticalDomino.Placement.UpValue == domino.Value1 || firstVerticalDomino.Placement.UpValue == domino.Value2)
+			{
+				dominoes.AddLast(domino);
+				continue;
+			}
+			Domino lastVerticalDomino = History.VerticalDominoes.Last.Value;
+			if (lastVerticalDomino.Placement.DownValue == domino.Value1 || lastVerticalDomino.Placement.DownValue == domino.Value2)
+			{
+				dominoes.AddLast(domino);
+				continue;
+			}
+		}
+		return dominoes;
+	}
+
+	public bool DrawCardFromTile(GameRole role, Domino domino)
+	{
+		if (role != CurrentGameRole || domino.Ownership != GameRole.BoneYard)
+		{
+			return false;
+		}
+		Player currentPlayer = GetCurrentPlayer();
+		domino.Ownership = role;
+		currentPlayer.Dominoes.AddLast(domino);
+		return true;
+	}
+
 	public bool PlayDomino(GameRole role, Domino dominoInHand, Domino dominoOnBoard)
     {
 		if (IsGameEnded || !role.Equals(CurrentGameRole) || !IsDominoInHand(role, dominoInHand)) {
@@ -81,14 +139,15 @@ public class Game
         }
 		Player currentPlayer = GetCurrentPlayer();
 		if (dominoOnBoard == null && History.HorizontalDominoes.Count == 0) {
-			History.HorizontalDominoes.AddLast (dominoInHand);
+			RemoveDominoInHand(currentPlayer, dominoInHand);
+			History.HorizontalDominoes.AddLast(dominoInHand);
 			if (dominoInHand.Value1 == dominoInHand.Value2)
 			{
 				dominoInHand.Placement.Direction = DominoDirection.Vertical;
 				dominoInHand.Placement.UpValue = dominoInHand.Value1;
 				dominoInHand.Placement.DownValue = dominoInHand.Value2;
 				History.Spinner = dominoInHand;
-				// TODO
+				History.VerticalDominoes.AddLast(dominoInHand);
 			}
 			else
 			{
@@ -103,19 +162,237 @@ public class Game
 
 		if (dominoOnBoard.Equals(History.HorizontalDominoes.First))
 		{
-			// TODO
+			if (dominoInHand.Value1 == dominoInHand.Value2)
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.LeftValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value1;
+					dominoInHand.Placement.DownValue = dominoInHand.Value2;
+					if (History.Spinner == null)
+					{
+						History.Spinner = dominoInHand;
+						History.VerticalDominoes.AddLast(dominoInHand);
+					}
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
+			else
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.LeftValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value2;
+					dominoInHand.Placement.RightValue = dominoInHand.Value1;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				else if (dominoInHand.Value2 == dominoOnBoard.Placement.LeftValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value1;
+					dominoInHand.Placement.RightValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
 		}
 		else if (dominoOnBoard.Equals(History.HorizontalDominoes.Last))
 		{
-			// TODO
+			if (dominoInHand.Value1 == dominoInHand.Value2)
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.RightValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value1;
+					dominoInHand.Placement.DownValue = dominoInHand.Value2;
+					if (History.Spinner == null)
+					{
+						History.Spinner = dominoInHand;
+						History.VerticalDominoes.AddLast(dominoInHand);
+					}
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
+			else
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.RightValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value1;
+					dominoInHand.Placement.RightValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				else if (dominoInHand.Value2 == dominoOnBoard.Placement.RightValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value2;
+					dominoInHand.Placement.RightValue = dominoInHand.Value1;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
 		}
 		else if (dominoOnBoard.Equals(History.VerticalDominoes.First))
 		{
-			// TODO
+			if (dominoInHand.Value1 == dominoInHand.Value2)
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.UpValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value1;
+					dominoInHand.Placement.RightValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
+			else
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.UpValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value2;
+					dominoInHand.Placement.DownValue = dominoInHand.Value1;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				else if (dominoInHand.Value2 == dominoOnBoard.Placement.UpValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddFirst(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value1;
+					dominoInHand.Placement.DownValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
 		}
 		else if (dominoOnBoard.Equals(History.VerticalDominoes.Last))
 		{
-			// TODO
+			if (dominoInHand.Value1 == dominoInHand.Value2)
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.DownValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Horizontal;
+					dominoInHand.Placement.LeftValue = dominoInHand.Value1;
+					dominoInHand.Placement.RightValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
+			else
+			{
+				if (dominoInHand.Value1 == dominoOnBoard.Placement.DownValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value1;
+					dominoInHand.Placement.DownValue = dominoInHand.Value2;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				else if (dominoInHand.Value2 == dominoOnBoard.Placement.DownValue)
+				{
+					RemoveDominoInHand(currentPlayer, dominoInHand);
+					History.HorizontalDominoes.AddLast(dominoInHand);
+					dominoInHand.Placement.Direction = DominoDirection.Vertical;
+					dominoInHand.Placement.UpValue = dominoInHand.Value2;
+					dominoInHand.Placement.DownValue = dominoInHand.Value1;
+					ScoreByPlaying(currentPlayer);
+					if (currentPlayer.Dominoes.Count == 0)
+					{
+						ScoreByEndingHand(currentPlayer);
+					}
+					NextTurn();
+					return true;
+				}
+				return false;
+			}
 		}
 		return false;
     }
@@ -181,8 +458,7 @@ public class Game
 		Domino firstHorizontalDomino = History.HorizontalDominoes.First.Value;
 		if (firstHorizontalDomino.Placement.Direction == DominoDirection.Vertical)
 		{
-			score += firstHorizontalDomino.Placement.UpValue;
-			score += firstHorizontalDomino.Placement.DownValue;
+			score += firstHorizontalDomino.Placement.UpValue + firstHorizontalDomino.Placement.DownValue;
 		}
 		else if (firstHorizontalDomino.Placement.Direction == DominoDirection.Vertical)
 		{
@@ -195,8 +471,7 @@ public class Game
 		Domino lastHorizontalDomino = History.HorizontalDominoes.Last.Value;
 		if (lastHorizontalDomino.Placement.Direction == DominoDirection.Vertical)
 		{
-			score += lastHorizontalDomino.Placement.UpValue;
-			score += lastHorizontalDomino.Placement.DownValue;
+			score += lastHorizontalDomino.Placement.UpValue + lastHorizontalDomino.Placement.DownValue;
 		}
 		else if (lastHorizontalDomino.Placement.Direction == DominoDirection.Vertical)
 		{
@@ -207,7 +482,7 @@ public class Game
 			throw new Exception("Error: Domino not specified");
 		}
 
-		if (History.VerticalDominoes.Count <= 1)
+		if (History.VerticalDominoes.Count == 0)
 		{
 			if (score % 5 == 0)
 			{
@@ -220,12 +495,34 @@ public class Game
 			Domino firstVerticalDomino = History.VerticalDominoes.First.Value;
 			if (firstVerticalDomino != History.Spinner)
 			{
-				score += firstVerticalDomino.Placement.UpValue;
+				if (firstVerticalDomino.Placement.Direction == DominoDirection.Vertical)
+				{
+					score += firstVerticalDomino.Placement.UpValue;
+				}
+				else if (firstVerticalDomino.Placement.Direction == DominoDirection.Horizontal)
+				{
+					score += firstVerticalDomino.Placement.LeftValue + firstVerticalDomino.Placement.RightValue;
+				}
+				else
+				{
+					throw new Exception("Error: Domino not specified");
+				}
 			}
 			Domino lastVerticalDomino = History.VerticalDominoes.First.Value;
 			if (lastVerticalDomino != History.Spinner)
 			{
-				score += lastVerticalDomino.Placement.DownValue;
+				if (lastVerticalDomino.Placement.Direction == DominoDirection.Vertical)
+				{
+					score += lastVerticalDomino.Placement.UpValue;
+				}
+				else if (lastVerticalDomino.Placement.Direction == DominoDirection.Horizontal)
+				{
+					score += lastVerticalDomino.Placement.LeftValue + lastVerticalDomino.Placement.RightValue;
+				}
+				else
+				{
+					throw new Exception("Error: Domino not specified");
+				}
 			}
 			if (score % 5 == 0)
 			{
@@ -234,9 +531,31 @@ public class Game
 		}
 	}
 
-	private void EndGameScore(Player player)
+	private void ScoreByEndingHand(Player player)
 	{
-		// TODO
+		Player opponent = null;
+		if (player == player1)
+		{
+			opponent = player2;
+		}
+		else
+		{
+			opponent = player1;
+		}
+		int score = 0;
+		for (LinkedListNode<Domino> node = opponent.Dominoes.First; node != null; node = node.Next)
+		{
+			Domino domino = node.Value;
+			score += domino.Value1 + domino.Value2;
+		}
+		if (score % 5 <= 2)
+		{
+			AddScore(player, score / 5 * 5);
+		}
+		else
+		{
+			AddScore(player, score / 5 * 5 + 5);
+		}
 	}
 
 	private void AddScore(Player player, int score)
