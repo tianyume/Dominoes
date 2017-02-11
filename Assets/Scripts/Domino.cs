@@ -4,15 +4,19 @@
     public int Value2 { get; private set; }
 
     public bool IsObservableByAll { get; set; }
-    public DominoDirection Direction { get; set; }
     public GameRole Ownership { get; set; }
+	public DominoPlacement Placement;
 
-    public Domino(int value1, int value2, bool isObservableByAll, DominoDirection direction, GameRole ownership)
+    public Domino(int value1, int value2)
     {
         Value1 = value1;
         Value2 = value2;
-        IsObservableByAll = isObservableByAll;
-        Direction = direction;
-        Ownership = ownership;
+		IsObservableByAll = false;
+		Ownership = GameRole.BoneYard;
+		Placement.Direction = DominoDirection.NotSpecified;
+		Placement.LeftValue = -1;
+		Placement.RightValue = -1;
+		Placement.UpValue = -1;
+		Placement.DownValue = -1;
     }
 }
