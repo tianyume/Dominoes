@@ -1,39 +1,39 @@
 fileFormatVersion: 2
-guid: 66cdae5cd3a32fb46b53e2b237a7883b
-timeCreated: 1486769884
+guid: 8c766ec22b94f4fc991c5d698627b0a4
+timeCreated: 1487098868
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bones-sprite_0
-    21300002: bones-sprite_1
-    21300004: bones-sprite_2
-    21300006: bones-sprite_3
-    21300008: bones-sprite_4
-    21300010: bones-sprite_5
-    21300012: bones-sprite_6
-    21300014: bones-sprite_7
-    21300016: bones-sprite_8
-    21300018: bones-sprite_9
-    21300020: bones-sprite_10
-    21300022: bones-sprite_11
-    21300024: bones-sprite_12
-    21300026: bones-sprite_13
-    21300028: bones-sprite_14
-    21300030: bones-sprite_15
-    21300032: bones-sprite_16
-    21300034: bones-sprite_17
-    21300036: bones-sprite_18
-    21300038: bones-sprite_19
-    21300040: bones-sprite_20
-    21300042: bones-sprite_21
-    21300044: bones-sprite_22
-    21300046: bones-sprite_23
-    21300048: bones-sprite_24
-    21300050: bones-sprite_25
-    21300052: bones-sprite_26
-    21300054: bones-sprite_27
-    21300056: bones-sprite_28
-    21300058: bones-sprite_29
+    21300000: bones_sprite_0
+    21300002: bones_sprite_1
+    21300004: bones_sprite_2
+    21300006: bones_sprite_3
+    21300008: bones_sprite_4
+    21300010: bones_sprite_5
+    21300012: bones_sprite_6
+    21300014: bones_sprite_7
+    21300016: bones_sprite_8
+    21300018: bones_sprite_9
+    21300020: bones_sprite_10
+    21300022: bones_sprite_11
+    21300024: bones_sprite_12
+    21300026: bones_sprite_13
+    21300028: bones_sprite_14
+    21300030: bones_sprite_15
+    21300032: bones_sprite_16
+    21300034: bones_sprite_17
+    21300036: bones_sprite_18
+    21300038: bones_sprite_19
+    21300040: bones_sprite_20
+    21300042: bones_sprite_21
+    21300044: bones_sprite_22
+    21300046: bones_sprite_23
+    21300048: bones_sprite_24
+    21300050: bones_sprite_25
+    21300052: bones_sprite_26
+    21300054: bones_sprite_27
+    21300056: bones_sprite_28
+    21300058: bones_sprite_29
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bones-sprite_0
+      name: bones_sprite_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,7 +113,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_1
+      name: bones_sprite_1
       rect:
         serializedVersion: 2
         x: 72
@@ -126,7 +126,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_2
+      name: bones_sprite_2
       rect:
         serializedVersion: 2
         x: 144
@@ -139,7 +139,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_3
+      name: bones_sprite_3
       rect:
         serializedVersion: 2
         x: 216
@@ -152,7 +152,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_4
+      name: bones_sprite_4
       rect:
         serializedVersion: 2
         x: 288
@@ -165,7 +165,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_5
+      name: bones_sprite_5
       rect:
         serializedVersion: 2
         x: 360
@@ -178,7 +178,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_6
+      name: bones_sprite_6
       rect:
         serializedVersion: 2
         x: 432
@@ -191,7 +191,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_7
+      name: bones_sprite_7
       rect:
         serializedVersion: 2
         x: 0
@@ -204,7 +204,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_8
+      name: bones_sprite_8
       rect:
         serializedVersion: 2
         x: 72
@@ -217,7 +217,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_9
+      name: bones_sprite_9
       rect:
         serializedVersion: 2
         x: 144
@@ -230,7 +230,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_10
+      name: bones_sprite_10
       rect:
         serializedVersion: 2
         x: 216
@@ -243,7 +243,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_11
+      name: bones_sprite_11
       rect:
         serializedVersion: 2
         x: 288
@@ -256,7 +256,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_12
+      name: bones_sprite_12
       rect:
         serializedVersion: 2
         x: 360
@@ -269,7 +269,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_13
+      name: bones_sprite_13
       rect:
         serializedVersion: 2
         x: 432
@@ -282,7 +282,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_14
+      name: bones_sprite_14
       rect:
         serializedVersion: 2
         x: 0
@@ -295,7 +295,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_15
+      name: bones_sprite_15
       rect:
         serializedVersion: 2
         x: 72
@@ -308,7 +308,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_16
+      name: bones_sprite_16
       rect:
         serializedVersion: 2
         x: 144
@@ -321,7 +321,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_17
+      name: bones_sprite_17
       rect:
         serializedVersion: 2
         x: 216
@@ -334,7 +334,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_18
+      name: bones_sprite_18
       rect:
         serializedVersion: 2
         x: 288
@@ -347,7 +347,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_19
+      name: bones_sprite_19
       rect:
         serializedVersion: 2
         x: 360
@@ -360,7 +360,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_20
+      name: bones_sprite_20
       rect:
         serializedVersion: 2
         x: 432
@@ -373,7 +373,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_21
+      name: bones_sprite_21
       rect:
         serializedVersion: 2
         x: 0
@@ -386,7 +386,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_22
+      name: bones_sprite_22
       rect:
         serializedVersion: 2
         x: 72
@@ -399,7 +399,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_23
+      name: bones_sprite_23
       rect:
         serializedVersion: 2
         x: 144
@@ -412,7 +412,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_24
+      name: bones_sprite_24
       rect:
         serializedVersion: 2
         x: 216
@@ -425,7 +425,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_25
+      name: bones_sprite_25
       rect:
         serializedVersion: 2
         x: 288
@@ -438,7 +438,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_26
+      name: bones_sprite_26
       rect:
         serializedVersion: 2
         x: 360
@@ -451,7 +451,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_27
+      name: bones_sprite_27
       rect:
         serializedVersion: 2
         x: 432
@@ -464,7 +464,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_28
+      name: bones_sprite_28
       rect:
         serializedVersion: 2
         x: 0
@@ -477,7 +477,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bones-sprite_29
+      name: bones_sprite_29
       rect:
         serializedVersion: 2
         x: 72
