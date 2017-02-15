@@ -36,7 +36,7 @@ public class Game
             for (int j = i; j <= MAXNUM; j++)
             {
                 Domino temp = new Domino(i, j);
-				Tile.Dominoes.Add (temp);
+				Tile.Dominoes.Add(temp);
             }
         }
     }
@@ -80,9 +80,8 @@ public class Game
 		}
 		LinkedList<Domino> dominoes = new LinkedList<Domino>();
 		Player currentPlayer = GetCurrentPlayer();
-		for (LinkedListNode<Domino> node = currentPlayer.Dominoes.First; node != null; node = node.Next)
-		{
-			Domino domino = node.Value;
+        foreach (Domino domino in currentPlayer.Dominoes)
+        {
 			if (History.HorizontalDominoes.Count == 0)
 			{
 				dominoes.AddLast(domino);
@@ -543,9 +542,8 @@ public class Game
 			opponent = player1;
 		}
 		int score = 0;
-		for (LinkedListNode<Domino> node = opponent.Dominoes.First; node != null; node = node.Next)
+        foreach (Domino domino in opponent.Dominoes)
 		{
-			Domino domino = node.Value;
 			score += domino.Value1 + domino.Value2;
 		}
 		if (score % 5 <= 2)
