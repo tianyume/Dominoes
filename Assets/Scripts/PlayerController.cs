@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameController gameController;
+    public DominoController exampleDomino;
     public string playerName;
     public List<DominoController> dominoControllers;
 	

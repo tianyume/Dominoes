@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileController : MonoBehaviour
 {
+    public DominoController exampleDomino;
     public List<DominoController> dominoControllers;
 
 	void Start()
