@@ -56,6 +56,7 @@ public class DominoController : MonoBehaviour
     };
 
     public DominoFactoryController dominoFactory;
+    public Values values;
 
     delegate void OnClickDelegate(DominoController dominoController);
     OnClickDelegate onClick;
@@ -90,5 +91,6 @@ public class DominoController : MonoBehaviour
     public void SetValues(Values values)
     {
         spriteIndex = dict[values];
+        this.values = values;
     }
 }
