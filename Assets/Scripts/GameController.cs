@@ -7,5 +7,5 @@ public class GameController : MonoBehaviour
 	void Start()
     {
         game = new Game();
-	}
+    }
 }
