@@ -186,6 +186,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 486113553}
+  - component: {fileID: 486113554}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -206,6 +207,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486113554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 486113552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aef8cedb8d4347e190b63ad51a25639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dominoControllers: []
 --- !u!1 &529744261
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +227,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 529744262}
+  - component: {fileID: 529744263}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -234,6 +248,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &529744263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 529744261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76bae65929554421afbfc0ddf46aff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: player2
 --- !u!1 &861709674
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +268,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 861709675}
+  - component: {fileID: 861709676}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -262,6 +289,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861709676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 861709674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76bae65929554421afbfc0ddf46aff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: player1
 --- !u!1 &1448602196
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b84f9bbcb8c4c142925a9caa71c721a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Spinner: {fileID: 0}
 --- !u!4 &1448602198
 Transform:
   m_ObjectHideFlags: 0

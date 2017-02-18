@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public string playerName;
-    public LinkedList<DominoController> dominoControllers;
+    public List<DominoController> dominoControllers;
 	
 	void Start()
     {
-        dominoControllers = new LinkedList<DominoController>();
+        dominoControllers = new List<DominoController>(28);
 	}
 
     void Update()
