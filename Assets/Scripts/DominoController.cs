@@ -59,6 +59,7 @@ public class DominoController : MonoBehaviour
     public bool IsObservableByAll { get; set; }
     public GameRole Ownership { get; set; }
     public DominoPlacement Placement;
+    public Values values;
 
     delegate void OnClickDelegate(DominoController dominoController);
     OnClickDelegate onClick;
@@ -93,5 +94,6 @@ public class DominoController : MonoBehaviour
     public void SetValues(Values values)
     {
         spriteIndex = dict[values];
+        this.values = values;
     }
 }
