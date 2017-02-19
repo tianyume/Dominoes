@@ -25,11 +25,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Domino animation
-        //dominoControllers[0].GetComponent<Transform>().transform.position;
         foreach(DominoController domino in dominoControllers)
         {
-            domino.GetComponent<Transform>().transform.position = new Vector3(cnt++, -9,0);
+            // TOFIX
+            domino.transform.position = new Vector3(cnt++, -4, 0);
         }
 
     }
@@ -45,8 +44,9 @@ public class PlayerController : MonoBehaviour
     }
 
     // For Tile
-    public void AddDomino(DominoController dominoController)
+    public void AddDomino()
     {
+        // TOFIX
         dominoControllers.AddRange(tileController.Deal());
         
 //        dominoControllers.Add(dominoController);

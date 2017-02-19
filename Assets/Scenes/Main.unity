@@ -266,6 +266,7 @@ MonoBehaviour:
     type: 2}
   playerName: player2
   dominoControllers: []
+  tileController: {fileID: 486113554}
 --- !u!1 &861709674
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +312,7 @@ MonoBehaviour:
     type: 2}
   playerName: player1
   dominoControllers: []
+  tileController: {fileID: 486113554}
 --- !u!1 &1448602196
 GameObject:
   m_ObjectHideFlags: 0

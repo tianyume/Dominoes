@@ -19,6 +19,13 @@ public class GameController : MonoBehaviour
     public PlayerPlayDominoAction player1ShouldPlayDomino;
     public PlayerPlayDominoAction player2ShouldPlayDomino;
 
+    void Start()
+    {
+        tile.Shuffle();
+        player1.AddDomino();
+        player2.AddDomino();
+    }
+
     void TileDidDealt(DominoController domino)
     {
     }

@@ -23,6 +23,7 @@ public class TileController : MonoBehaviour
     void Update()
     {
         // Domino animation
+        ShowCards();
     }
 
     // For Game
