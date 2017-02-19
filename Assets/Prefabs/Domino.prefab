@@ -54,6 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dominoFactory: {fileID: 114882609217966236, guid: 28acaad4e8cff4bd984ed8f3747787e5,
     type: 2}
+  isObservableByAll: 0
+  ownership: 0
 --- !u!212 &212594035099817138
 SpriteRenderer:
   m_ObjectHideFlags: 1
