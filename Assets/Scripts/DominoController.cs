@@ -71,11 +71,9 @@ public class DominoController : MonoBehaviour
     public int leftValue;
     public int rightValue;
 
-    delegate void OnClickDelegate(DominoController dominoController);
-    OnClickDelegate onClick;
-
+    public delegate void OnClickDelegate(DominoController dominoController);
+    public OnClickDelegate onClick;
     private int spriteIndex;
-
     private void Update()
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
