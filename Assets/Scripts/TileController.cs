@@ -40,7 +40,7 @@ public class TileController : MonoBehaviour
     public DominoController Deal(int index)
     {
         //TODO
-        if (dominoes[index].Ownership == GameRole.BoneYard)
+        if (dominoes[index].ownership == GameRole.BoneYard)
         {
             return dominoes[index];
         }
