@@ -56,6 +56,9 @@ public class DominoController : MonoBehaviour
     };
 
     public DominoFactoryController dominoFactory;
+    public bool IsObservableByAll { get; set; }
+    public GameRole Ownership { get; set; }
+    public DominoPlacement Placement;
 
     delegate void OnClickDelegate(DominoController dominoController);
     OnClickDelegate onClick;
