@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class DominoController : MonoBehaviour
 {
-    public struct Values
+    struct Values
     {
         int value1;
         int value2;
@@ -21,6 +21,11 @@ public class DominoController : MonoBehaviour
                 this.value2 = value1;
             }
         }
+    }
+
+    public enum Direction
+    {
+        Horizontal, Vertical
     }
     
     static readonly Dictionary<Values, int> dict = new Dictionary<Values, int>
@@ -58,8 +63,13 @@ public class DominoController : MonoBehaviour
     public DominoFactoryController dominoFactory;
     public bool isObservableByAll;
     public GameRole ownership;
-    public DominoPlacement placement;
-    public Values values;
+
+    public Direction direction;
+
+    public int upperValue;
+    public int lowerValue;
+    public int leftValue;
+    public int rightValue;
 
     delegate void OnClickDelegate(DominoController dominoController);
     OnClickDelegate onClick;
@@ -91,9 +101,47 @@ public class DominoController : MonoBehaviour
         //}
     }
 
-    public void SetValues(Values values)
+    public void SetUpperLowerValues(int upper, int lower)
     {
+        Values values = new Values(upper, lower);
         spriteIndex = dict[values];
-        this.values = values;
+
+        direction = Direction.Vertical;
+
+        upperValue = upper;
+        lowerValue = lower;
+        leftValue = -1;
+        rightValue = -1;
+
+        if (upper > lower)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 180);
+        }
+    }
+
+    public void SetLeftRightValues(int left, int right)
+    {
+        Values values = new Values(left, right);
+        spriteIndex = dict[values];
+
+        direction = Direction.Horizontal;
+
+        leftValue = left;
+        rightValue = right;
+        upperValue = -1;
+        lowerValue = -1;
+
+        if (left > right)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 270);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90);
+        }
     }
 }
