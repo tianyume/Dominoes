@@ -61,7 +61,8 @@ public class TileController : MonoBehaviour
             for (int j = i; j <= MAXNUM; j++)
             {
                 DominoController temp = (DominoController)Instantiate(exampleDomino);
-                temp.SetValues(new DominoController.Values(i,j));
+                temp.SetUpperLowerValues(i, j);
+//                temp.SetValues(new DominoController.Values(i,j));
                 dominoes.Add(temp);
                 //temp.transform.position = new Vector3(i*2, j*2, 0);
             }
