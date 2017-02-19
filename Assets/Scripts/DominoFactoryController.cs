@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DominoFactoryController : MonoBehaviour {
+public class DominoFactoryController : MonoBehaviour
+{
     public Sprite[] sprites;
 
     public Sprite CloneSprite(int index)

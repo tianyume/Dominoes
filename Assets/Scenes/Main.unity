@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
     type: 2}
-  dominoControllers: []
+  dominoes: []
 --- !u!1 &529744261
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b84f9bbcb8c4c142925a9caa71c721a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 486113554}
+  player1: {fileID: 861709676}
+  player2: {fileID: 529744263}
   exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
     type: 2}
   Spinner: {fileID: 0}
