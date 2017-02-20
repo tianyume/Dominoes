@@ -10,20 +10,21 @@ public class TileController : MonoBehaviour
     const int NUMDEAL = 5;
     public DominoController exampleDomino;
     public List<DominoController> dominoes;
+    public float startPosition = -19f;
+    public float interval = 1.3f;
+    public float localScale = 2.0f;
 
 	void Start()
     {
         dominoes = new List<DominoController>(28);
         Init();
         //Shuffle();
-        //ShowCards();
-        // Init dominoControllers
 	}
 
     void Update()
     {
         // Domino animation
-        ShowCards();
+        ShowTile();
     }
 
     // For Game
@@ -59,16 +60,7 @@ public class TileController : MonoBehaviour
             }
         }
         return ret;
-        /*if (dominoes[index].ownership == GameRole.BoneYard)
-        {
-            dominoes[index].ownership = GameRole.Player1;
-            return dominoes[index];
-        }
-        else
-        {
-            return null;
-        }*/
-    }
+     }
 
     public bool IsDrawable()
     {
@@ -94,19 +86,17 @@ public class TileController : MonoBehaviour
             {
                 DominoController temp = (DominoController)Instantiate(exampleDomino);
                 temp.SetUpperLowerValues(i, j);
-//                temp.SetValues(new DominoController.Values(i,j));
                 dominoes.Add(temp);
-                //temp.transform.position = new Vector3(i*2, j*2, 0);
             }
         }       
     }
 
-    void ShowCards()
-    {
-        int count = 0;
-        foreach (DominoController temp in dominoes)
+    void ShowTile()
+    {        
+        for (int i = 0; i < dominoes.Count; i++)
         {
-            temp.transform.position = new Vector3(count++, 0, 0);
+            dominoes[i].transform.position = new Vector3(startPosition+(float)i*interval,0,0);
+            dominoes[i].transform.localScale = new Vector3(localScale, localScale, 0);
         }
     }
 }

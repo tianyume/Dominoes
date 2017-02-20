@@ -56,6 +56,11 @@ MonoBehaviour:
     type: 2}
   isObservableByAll: 0
   ownership: 0
+  direction: 0
+  upperValue: -1
+  lowerValue: -1
+  leftValue: -1
+  rightValue: -1
 --- !u!212 &212594035099817138
 SpriteRenderer:
   m_ObjectHideFlags: 1

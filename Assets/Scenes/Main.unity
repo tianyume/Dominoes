@@ -221,6 +221,9 @@ MonoBehaviour:
   exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
     type: 2}
   dominoes: []
+  startPosition: -18
+  interval: 1.3
+  localScale: 2
 --- !u!1 &529744261
 GameObject:
   m_ObjectHideFlags: 0
