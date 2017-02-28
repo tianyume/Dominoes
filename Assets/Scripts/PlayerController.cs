@@ -37,7 +37,35 @@ public class PlayerController : MonoBehaviour
         //dominoControllers.Add(dominoController);
        // Debug.Log("click!!");
         Debug.Log(dominoController.upperValue);
-        dominoController.transform.position.y++;
+//        dominoController.transform.position.y++;
+        Vector3 temp = dominoController.transform.position;
+        if(playerName=="player1")
+        {
+            if (dominoController.isClicked)
+            {
+                temp.y = temp.y + (float)0.50;
+                dominoController.transform.position = temp;
+            }
+            else
+            {
+                temp.y = temp.y - (float)0.50;
+                dominoController.transform.position = temp;
+            }
+        }
+        else
+        {
+            if (dominoController.isClicked)
+            {
+                temp.y = temp.y - (float)0.50;
+                dominoController.transform.position = temp;
+            }
+            else
+            {
+                temp.y = temp.y + (float)0.50;
+                dominoController.transform.position = temp;
+            }
+        }
+
 
     }
 

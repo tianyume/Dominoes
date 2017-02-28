@@ -71,6 +71,8 @@ public class DominoController : MonoBehaviour
     public int leftValue;
     public int rightValue;
 
+    public bool isClicked = false;
+
     public delegate void OnClickDelegate(DominoController dominoController);
     public OnClickDelegate onClick;
     private int spriteIndex;
@@ -84,6 +86,7 @@ public class DominoController : MonoBehaviour
             {
                 if (onClick != null)
                 {
+                    isClicked = !isClicked;
                     onClick(this);
                 }
             }
