@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameController gameController;
-    public DominoController exampleDomino;
+    //public DominoController dominoController;
     public string playerName;
     public List<DominoController> dominoControllers;
     public TileController tileController;
@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-	
 	void Start()
     {
         dominoControllers = new List<DominoController>(28);
@@ -25,11 +24,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        foreach(DominoController domino in dominoControllers)
-        {
-            // TOFIX
-            domino.transform.position = new Vector3(cnt++, -4, 0);
-        }
+
+
 
     }
 
@@ -38,8 +34,10 @@ public class PlayerController : MonoBehaviour
 
     public void DominoOnClick(DominoController dominoController)
     {
-        dominoControllers.Add(dominoController);
-
+        //dominoControllers.Add(dominoController);
+       // Debug.Log("click!!");
+        Debug.Log(dominoController.upperValue);
+        dominoController.transform.position.y++;
 
     }
 
@@ -48,9 +46,29 @@ public class PlayerController : MonoBehaviour
     {
         // TOFIX
         dominoControllers.AddRange(tileController.Deal());
-        
-//        dominoControllers.Add(dominoController);
-//        dominoController.onClick = DominoOnClick;
+
+        if (playerName == "player1")
+        {
+            cnt = 0;
+            foreach (DominoController domino in dominoControllers)
+            {
+                // TOFIX
+                domino.transform.position = new Vector3(cnt++, -4, 0);
+                domino.onClick = DominoOnClick;
+            }
+        }
+        else if(playerName == "player2")
+        {
+            cnt = 0;
+            foreach (DominoController domino in dominoControllers)
+            {
+                // TOFIX
+                domino.transform.position = new Vector3(cnt++, 4, 0);
+                domino.onClick = DominoOnClick;
+            }
+        }
+
+         
 
 
     }
