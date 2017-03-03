@@ -14,7 +14,7 @@ public class HistoryController : MonoBehaviour
         verticalDominoes = new List<DominoController>(28);
     }
 
-    void Add(DominoController playedDomino, DominoController historyDomino)
+    public void Add(DominoController playedDomino, DominoController historyDomino)
     {
         if (playedDomino == null)
         {

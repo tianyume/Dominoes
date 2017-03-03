@@ -3,39 +3,48 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
+    private const int maxScore = 150;
+
     public TileController tile;
+    public HistoryController history;
     public PlayerController player1;
     public PlayerController player2;
-    
-    public DominoController exampleDomino;
-    public DominoController Spinner;
-    public LinkedList<DominoController> HorizontalDominoes;
-    public LinkedList<DominoController> VerticalDominoes;
 
-    public delegate void TileDrawAction(int index);
-    public delegate void PlayerPlayDominoAction();
-
-    public TileDrawAction tileShouldDraw;
-    public PlayerPlayDominoAction player1ShouldPlayDomino;
-    public PlayerPlayDominoAction player2ShouldPlayDomino;
+    public int scoreOfPlayer1;
+    public int scoreOfPlayer2;
 
     void Start()
     {
+        scoreOfPlayer1 = 0;
+        scoreOfPlayer2 = 0;
         tile.Shuffle();
         player1.AddDomino();
         player2.AddDomino();
+        player1.PlayDomino();
     }
 
-    void TileDidDealt(DominoController domino)
+    void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
     {
-    }
-
-    void TileDidReset()
-    {
-    }
-
-    void PlayerDidPlayedDomino(Player player, DominoController dominoController, DominoController anotherDominoController)
-    {
-        
+        history.Add(domino, anotherDomino);
+        // TODO calculate the score of current play
+        if (player.dominoControllers.Count == 0)
+        {
+            // TODO calculate the score
+            if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
+            {
+                return;
+            }
+            tile.Shuffle();
+            player1.AddDomino();
+            player2.AddDomino();
+        }
+        if (player == player1)
+        {
+            player2.PlayDomino();
+        }
+        else
+        {
+            player1.PlayDomino();
+        }
     }
 }

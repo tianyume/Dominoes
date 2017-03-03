@@ -265,8 +265,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1448602197}
-  exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
-    type: 2}
   playerName: player2
   dominoControllers: []
   tileController: {fileID: 486113554}
@@ -311,11 +309,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1448602197}
-  exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
-    type: 2}
   playerName: player1
   dominoControllers: []
   tileController: {fileID: 486113554}
+--- !u!1 &1232068274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1232068276}
+  - component: {fileID: 1232068275}
+  m_Layer: 0
+  m_Name: History
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1232068275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1232068274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb0e00a19ca74d45bbe0152cbc921da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinner: {fileID: 0}
+  horizontalDominoes: []
+  verticalDominoes: []
+--- !u!4 &1232068276
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1232068274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1448602196
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +365,7 @@ GameObject:
   - component: {fileID: 1448602198}
   - component: {fileID: 1448602197}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,11 +383,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 486113554}
+  history: {fileID: 1232068275}
   player1: {fileID: 861709676}
   player2: {fileID: 529744263}
-  exampleDomino: {fileID: 114915650118240054, guid: 13d707d220119e847b3cf2537f828613,
-    type: 2}
-  Spinner: {fileID: 0}
+  scoreOfPlayer1: 0
+  scoreOfPlayer2: 0
 --- !u!4 &1448602198
 Transform:
   m_ObjectHideFlags: 0
