@@ -71,6 +71,9 @@ public class DominoController : MonoBehaviour
     public int leftValue;
     public int rightValue;
 
+    public float offsetHorizontal;
+    public float offsetVertical;
+
     public bool isClicked = false;
 
     public delegate void OnClickDelegate(DominoController dominoController);

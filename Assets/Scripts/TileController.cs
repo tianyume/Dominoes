@@ -59,6 +59,7 @@ public class TileController : MonoBehaviour
                 }
             }
         }
+        Shuffle();
         return ret;
      }
 
@@ -97,6 +98,10 @@ public class TileController : MonoBehaviour
         {
             dominoes[i].transform.position = new Vector3(startPosition+(float)i*interval,0,0);
             dominoes[i].transform.localScale = new Vector3(localScale, localScale, 0);
+            //if (dominoes[i].ownership != GameRole.BoneYard)
+            //{
+                dominoes[i].transform.position = new Vector3(100, 0, 0);
+            //}
         }
     }
 }
