@@ -23,13 +23,18 @@ public class GameController : MonoBehaviour
         player1.PlayDomino();
     }
 
-    void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
+    public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
     {
+        // Put the played domino into history
         history.Add(domino, anotherDomino);
-        // TODO calculate the score of current play
+        // Calculate the score of current play
+        ScoreByCurrentPlay(player);
+
+        // Ending a hand
         if (player.dominoControllers.Count == 0)
         {
-            // TODO calculate the score
+            // Calculate the score by ending a hand
+            ScoreByEndingHand(player);
             if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
             {
                 return;
@@ -37,7 +42,17 @@ public class GameController : MonoBehaviour
             tile.Shuffle();
             player1.AddDomino();
             player2.AddDomino();
+            if (player == player1)
+            {
+                player1.PlayDomino();
+            }
+            else
+            {
+                player2.PlayDomino();
+            }
+            return;
         }
+        // Or ending a turn
         if (player == player1)
         {
             player2.PlayDomino();
@@ -46,5 +61,122 @@ public class GameController : MonoBehaviour
         {
             player1.PlayDomino();
         }
+    }
+
+    void ScoreByCurrentPlay(PlayerController player)
+    {
+        int sum = GetSumOfHistoryDominoes();
+        if (sum % 5 == 0)
+        {
+            if (player == player1)
+            {
+                scoreOfPlayer1 += sum;
+            }
+            else
+            {
+                scoreOfPlayer2 += sum;
+            }
+        }
+    }
+
+    void ScoreByEndingHand(PlayerController player)
+    {
+        if (player == player1)
+        {
+            int sum = 0;
+            foreach (DominoController domino in player2.dominoControllers)
+            {
+                sum += domino.upperValue + domino.lowerValue;
+            }
+            if (sum % 5 < 3)
+            {
+                scoreOfPlayer1 += sum / 5 * 5;
+            }
+            else
+            {
+                scoreOfPlayer1 += (sum / 5 + 1) * 5;
+            }
+        }
+        else
+        {
+            int sum = 0;
+            foreach (DominoController domino in player1.dominoControllers)
+            {
+                sum += domino.upperValue + domino.lowerValue;
+            }
+            if (sum % 5 < 3)
+            {
+                scoreOfPlayer2 += sum / 5 * 5;
+            }
+            else
+            {
+                scoreOfPlayer2 += (sum / 5 + 1) * 5;
+            }
+        }
+    }
+
+    int GetSumOfHistoryDominoes()
+    {
+        // Only 1 domino in history
+        if (history.horizontalDominoes.Count == 1)
+        {
+            DominoController domino = history.horizontalDominoes[0];          
+            if (domino.direction == DominoController.Direction.Horizontal)
+            {
+                return domino.leftValue + domino.rightValue;
+            }
+            else
+            {
+                return domino.upperValue + domino.lowerValue;
+            }
+        }
+        int sum = 0;
+        DominoController leftDomino = history.horizontalDominoes[0];
+        if (leftDomino.direction == DominoController.Direction.Horizontal)
+        {
+            sum += leftDomino.leftValue;
+        }
+        else
+        {
+            sum += leftDomino.upperValue + leftDomino.lowerValue;
+        }
+        DominoController rightDomino = history.horizontalDominoes[history.horizontalDominoes.Count - 1];
+        if (rightDomino.direction == DominoController.Direction.Horizontal)
+        {
+            sum += rightDomino.rightValue;
+        }
+        else
+        {
+            sum += rightDomino.upperValue + rightDomino.lowerValue;
+        }
+        // Have dominoes except spinner
+        if (history.verticalDominoes.Count > 1)
+        {
+            DominoController upperDomino = history.verticalDominoes[0];
+            if (upperDomino != history.spinner)
+            {
+                if (upperDomino.direction == DominoController.Direction.Vertical)
+                {
+                    sum += upperDomino.upperValue;
+                }
+                else
+                {
+                    sum += upperDomino.leftValue + upperDomino.rightValue;
+                }
+            }
+            DominoController lowerDomino = history.verticalDominoes[history.verticalDominoes.Count - 1];
+            if (lowerDomino != history.spinner)
+            {
+                if (lowerDomino.direction == DominoController.Direction.Vertical)
+                {
+                    sum += lowerDomino.lowerValue;
+                }
+                else
+                {
+                    sum += lowerDomino.leftValue + lowerDomino.rightValue;
+                }
+            }
+        }
+        return sum;
     }
 }
