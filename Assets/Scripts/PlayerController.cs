@@ -5,12 +5,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameController gameController;
-    //public DominoController dominoController;
-    public string playerName;
     public List<DominoController> dominoControllers;
     public TileController tileController;
-    private int cnt;
 
+
+
+    public HistoryController historyController;
+    private DominoController chosenDomino;
+    private DominoController chosenPlace;
+
+
+    public int startPosition1 = -8;
+    public int startPosition2 = 8;
+    public string playerName;
+    private int cnt;
 
 
 	void Start()
@@ -32,37 +40,49 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void DominoOnClick(DominoController dominoController)
+    public void DominoOnClick(DominoController clickedDomino)
     {
-        //dominoControllers.Add(dominoController);
-       // Debug.Log("click!!");
-        Debug.Log(dominoController.upperValue);
-//        dominoController.transform.position.y++;
-        Vector3 temp = dominoController.transform.position;
+        Debug.Log(clickedDomino.upperValue);
+        Vector3 temp = clickedDomino.transform.position;
+        //set clicked domino
+        foreach (DominoController domino in dominoControllers)
+        {
+            if (domino.upperValue == clickedDomino.upperValue && domino.lowerValue == clickedDomino.lowerValue)
+            {
+                chosenDomino = clickedDomino;
+                break;
+            }
+        }
+
+
+
+       
+        //move clicked card
         if(playerName=="player1")
         {
-            if (dominoController.isClicked)
+
+            if (clickedDomino.isClicked)
             {
                 temp.y = temp.y + (float)0.50;
-                dominoController.transform.position = temp;
+                clickedDomino.transform.position = temp;
             }
             else
             {
                 temp.y = temp.y - (float)0.50;
-                dominoController.transform.position = temp;
+                clickedDomino.transform.position = temp;
             }
         }
         else
         {
-            if (dominoController.isClicked)
+            if (clickedDomino.isClicked)
             {
                 temp.y = temp.y - (float)0.50;
-                dominoController.transform.position = temp;
+                clickedDomino.transform.position = temp;
             }
             else
             {
                 temp.y = temp.y + (float)0.50;
-                dominoController.transform.position = temp;
+                clickedDomino.transform.position = temp;
             }
         }
 
@@ -81,7 +101,7 @@ public class PlayerController : MonoBehaviour
             foreach (DominoController domino in dominoControllers)
             {
                 // TOFIX
-                domino.transform.position = new Vector3(cnt++, -4, 0);
+                domino.transform.position = new Vector3(cnt++, startPosition1, 0);
                 domino.onClick = DominoOnClick;
             }
         }
@@ -91,20 +111,48 @@ public class PlayerController : MonoBehaviour
             foreach (DominoController domino in dominoControllers)
             {
                 // TOFIX
-                domino.transform.position = new Vector3(cnt++, 4, 0);
+                domino.transform.position = new Vector3(cnt++, startPosition2, 0);
                 domino.onClick = DominoOnClick;
             }
         }
-
-         
-
+           
 
     }
 
     // For Game
     public void PlayDomino()
     {
-         
+        //ToFix
+        if (chosenDomino != null && chosenPlace != null)
+        {
+            if (playerName == "player1")
+            {
+                registerDomino();
+                gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
+            }
+            else if (playerName == "player2")
+            {
+                registerDomino();
+                gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
+            }            
+        }
+                     
+    }
+       
+    public void registerDomino()
+    {
+        int horizontalLen = historyController.horizontalDominoes.Count;
+        int VerticalLen = historyController.verticalDominoes.Count;
+        if (horizontalLen != 0)
+        {
+            historyController.horizontalDominoes[0].onClick = DominoOnClick;
+            historyController.horizontalDominoes[horizontalLen-1].onClick = DominoOnClick;
+        }
+        if (VerticalLen != 0)
+        {
+            historyController.verticalDominoes[0].onClick = DominoOnClick;
+            historyController.verticalDominoes[horizontalLen-1].onClick = DominoOnClick;
+        }
     }
 
     public void DrawDomino(DominoController dominoController)
