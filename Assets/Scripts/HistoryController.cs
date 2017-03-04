@@ -10,6 +10,12 @@ public class HistoryController : MonoBehaviour
     public List<DominoController> verticalDominoes;
     bool isSpinnerPlaced;
     DominoController center;
+    PutPosition putPosition;
+
+    enum PutPosition
+    {
+        Left, Right, Up, Down
+    }
 
     void Start()
     {
@@ -59,10 +65,88 @@ public class HistoryController : MonoBehaviour
             return;
         }
 
-        // if historyDomino not null
+//         if historyDomino not null
 
-        if (horizontalDominoes.Count > 0 && historyDomino.Equals(horizontalDominoes[0]))
+        if (horizontalDominoes.Count > 0 && (historyDomino.Equals(horizontalDominoes[0]) || historyDomino.Equals(horizontalDominoes[horizontalDominoes.Count - 1])))
         {
+            if (playedDomino.direction == DominoController.Direction.Horizontal && historyDomino.direction == DominoController.Direction.Horizontal)
+            {
+                if (playedDomino.rightValue == historyDomino.leftValue)
+                {
+                    putPosition = PutPosition.Left;
+                }
+                if (playedDomino.leftValue == historyDomino.rightValue)
+                {
+                    putPosition = PutPosition.Right;
+                }
+            }
+            if (playedDomino.direction == DominoController.Direction.Horizontal && historyDomino.direction == DominoController.Direction.Vertical)
+            {
+                if (playedDomino.rightValue == historyDomino.upperValue)
+                {
+                    putPosition = PutPosition.Left;
+                }
+                if (playedDomino.leftValue == historyDomino.upperValue)
+                {
+                    putPosition = PutPosition.Right;
+                }
+            }
+            if (playedDomino.direction == DominoController.Direction.Vertical && historyDomino.direction == DominoController.Direction.Horizontal)
+            {
+                if (playedDomino.upperValue == historyDomino.leftValue)
+                {
+                    putPosition = PutPosition.Left;
+                }
+                if (playedDomino.upperValue == historyDomino.rightValue)
+                {
+                    putPosition = PutPosition.Right;
+                }
+            }                       
+        }
+        else if (verticalDominoes.Count > 0 && (historyDomino.Equals(verticalDominoes[0]) || historyDomino.Equals(verticalDominoes[verticalDominoes.Count - 1])))
+        {
+            if (playedDomino.direction == DominoController.Direction.Vertical && historyDomino.direction == DominoController.Direction.Vertical)
+            {
+                if (playedDomino.lowerValue == historyDomino.upperValue)
+                {
+                    putPosition = PutPosition.Up;
+                }
+                if (playedDomino.upperValue == historyDomino.lowerValue)
+                {
+                    putPosition = PutPosition.Down;
+                }
+            }
+            if (playedDomino.direction == DominoController.Direction.Horizontal && historyDomino.direction == DominoController.Direction.Vertical)
+            {
+                if (playedDomino.leftValue == historyDomino.upperValue)
+                {
+                    putPosition = PutPosition.Up;
+                }
+                if (playedDomino.leftValue == historyDomino.lowerValue)
+                {
+                    putPosition = PutPosition.Down;
+                }
+            }
+            if (playedDomino.direction == DominoController.Direction.Vertical && historyDomino.direction == DominoController.Direction.Horizontal)
+            {
+                if (playedDomino.lowerValue == historyDomino.leftValue)
+                {
+                    putPosition = PutPosition.Up;
+                }
+                if (playedDomino.upperValue == historyDomino.leftValue)
+                {
+                    putPosition = PutPosition.Down;
+                }
+            }                      
+            
+        }
+            
+        
+
+
+        if (putPosition == PutPosition.Left)
+        {
+            
             horizontalDominoes.Insert(0, playedDomino);
             // set spinner
             if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
@@ -89,7 +173,7 @@ public class HistoryController : MonoBehaviour
         }
 
 
-        else if (horizontalDominoes.Count > 1 && historyDomino.Equals(horizontalDominoes[horizontalDominoes.Count - 1]))
+        else if (putPosition == PutPosition.Right)
         {
             horizontalDominoes.Add(playedDomino);
             // set spinner
@@ -119,7 +203,7 @@ public class HistoryController : MonoBehaviour
 
         //VERTICAL
 
-        else if (verticalDominoes.Count > 0 && historyDomino.Equals(verticalDominoes[0]))
+        else if (putPosition == PutPosition.Up)
         {
             verticalDominoes.Insert(0, playedDomino);
 
@@ -140,7 +224,7 @@ public class HistoryController : MonoBehaviour
         }
 
 
-        else if (verticalDominoes.Count > 1 && historyDomino.Equals(verticalDominoes[verticalDominoes.Count - 1]))
+        else if (putPosition == PutPosition.Down)
         {
             verticalDominoes.Add(playedDomino);
 

@@ -142,11 +142,11 @@ public class DominoController : MonoBehaviour
 
         if (left > right)
         {
-            transform.eulerAngles = new Vector3(0, 0, 270);
+            transform.eulerAngles = new Vector3(0, 0, 90);
         }
         else
         {
-            transform.eulerAngles = new Vector3(0, 0, 90);
+            transform.eulerAngles = new Vector3(0, 0, 270);
         }
     }
 }
