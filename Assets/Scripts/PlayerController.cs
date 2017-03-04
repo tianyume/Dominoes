@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public HistoryController historyController;
     private DominoController chosenDomino;
     private DominoController chosenPlace;
+    private bool readytoplay = false;
 
 
     public int startPosition1 = -8;
@@ -39,55 +40,260 @@ public class PlayerController : MonoBehaviour
 
 
 
-
     public void DominoOnClick(DominoController clickedDomino)
     {
         Debug.Log(clickedDomino.upperValue);
-        Vector3 temp = clickedDomino.transform.position;
+        Debug.Log(clickedDomino.leftValue);
+        bool preflag = false;
+        readytoplay = false;
+
         //set clicked domino
         foreach (DominoController domino in dominoControllers)
         {
-            if (domino.upperValue == clickedDomino.upperValue && domino.lowerValue == clickedDomino.lowerValue)
-            {
-                chosenDomino = clickedDomino;
+            if (domino == clickedDomino)
+            {           
+                preflag = true;    
+                //move clicked card
+                Selecteffect(clickedDomino);
+                registerDomino();
+
+
+                if (chosenDomino == null)
+                {
+                    chosenDomino = clickedDomino;
+                }
+                else if (clickedDomino == chosenDomino)
+                {
+                    chosenDomino = null;
+                }
+                else if (clickedDomino != chosenDomino)
+                {
+                    chosenDomino.isClicked = false;
+                    Selecteffect(chosenDomino);
+                    chosenDomino = clickedDomino;
+                }
                 break;
             }
         }
+        if (!preflag && chosenDomino != null)
+        {
+            readytoplay = true;
+            Debug.Log(playerName);
+        }
 
+        if (chosenDomino != null)
+        {
+            int horizontalLen = historyController.horizontalDominoes.Count;
+            int verticalLen = historyController.verticalDominoes.Count;
+            if (horizontalLen == 0 && verticalLen == 0)
+            {
+                chosenPlace = null;
+                readytoplay = true;
+                if (chosenDomino.upperValue != chosenDomino.lowerValue)
+                    chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                PlayDomino();
+                chosenDomino = null;
+            }
+            else if(readytoplay)
+            {
+                if (clickedDomino == historyController.horizontalDominoes[0])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.upperValue || chosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.upperValue)
+                                chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            else
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.leftValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                        else if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.leftValue)
+                                chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            else
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.horizontalDominoes[horizontalLen-1])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.upperValue || chosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.upperValue)
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            else
+                                chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.rightValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                        else if (chosenDomino.upperValue == clickedDomino.rightValue || chosenDomino.lowerValue == clickedDomino.rightValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.rightValue)
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            else
+                                chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.verticalDominoes[0])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if(chosenDomino.upperValue == clickedDomino.upperValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                        else if (chosenDomino.upperValue == clickedDomino.upperValue || chosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.upperValue)
+                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.upperValue == clickedDomino.leftValue)
+                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.verticalDominoes[verticalLen-1])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if(chosenDomino.upperValue == clickedDomino.lowerValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                        else if (chosenDomino.upperValue == clickedDomino.lowerValue || chosenDomino.lowerValue == clickedDomino.lowerValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.lowerValue == clickedDomino.lowerValue)
+                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            chosenPlace = clickedDomino;
+                            if (chosenDomino.lowerValue == clickedDomino.leftValue)
+                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                            PlayDomino();
+                            chosenDomino = null;
+                            chosenPlace = null;
+                            return;
+                        }
+                    }
+                }
+            }
+                
 
+        }
 
-       
-        //move clicked card
+    }
+
+    public void Selecteffect(DominoController selected)
+    {
+        Vector3 temp = selected.transform.position;
         if(playerName=="player1")
         {
 
-            if (clickedDomino.isClicked)
+            if (selected.isClicked)
             {
                 temp.y = temp.y + (float)0.50;
-                clickedDomino.transform.position = temp;
+                selected.transform.position = temp;
             }
             else
             {
                 temp.y = temp.y - (float)0.50;
-                clickedDomino.transform.position = temp;
+                selected.transform.position = temp;
             }
         }
         else
         {
-            if (clickedDomino.isClicked)
+            if (selected.isClicked)
             {
                 temp.y = temp.y - (float)0.50;
-                clickedDomino.transform.position = temp;
+                selected.transform.position = temp;
             }
             else
             {
                 temp.y = temp.y + (float)0.50;
-                clickedDomino.transform.position = temp;
+                selected.transform.position = temp;
             }
         }
-
-
     }
+
+
 
     // For Tile
     public void AddDomino()
@@ -123,18 +329,21 @@ public class PlayerController : MonoBehaviour
     public void PlayDomino()
     {
         //ToFix
-        if (chosenDomino != null && chosenPlace != null)
+        if (chosenDomino != null && readytoplay == true)
         {
+//            registerDomino();
             if (playerName == "player1")
             {
-                registerDomino();
+                
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
+
             }
             else if (playerName == "player2")
             {
-                registerDomino();
+//                registerDomino();
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
-            }            
+            }
+            dominoControllers.Remove(chosenDomino);
         }
                      
     }
@@ -142,16 +351,16 @@ public class PlayerController : MonoBehaviour
     public void registerDomino()
     {
         int horizontalLen = historyController.horizontalDominoes.Count;
-        int VerticalLen = historyController.verticalDominoes.Count;
+        int verticalLen = historyController.verticalDominoes.Count;
         if (horizontalLen != 0)
         {
             historyController.horizontalDominoes[0].onClick = DominoOnClick;
             historyController.horizontalDominoes[horizontalLen-1].onClick = DominoOnClick;
         }
-        if (VerticalLen != 0)
+        if (verticalLen != 0)
         {
             historyController.verticalDominoes[0].onClick = DominoOnClick;
-            historyController.verticalDominoes[horizontalLen-1].onClick = DominoOnClick;
+            historyController.verticalDominoes[verticalLen-1].onClick = DominoOnClick;
         }
     }
 

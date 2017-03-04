@@ -265,9 +265,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1448602197}
-  playerName: player2
   dominoControllers: []
   tileController: {fileID: 486113554}
+  historyController: {fileID: 1232068275}
+  startPosition1: -8
+  startPosition2: 8
+  playerName: player2
 --- !u!1 &861709674
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,9 +312,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1448602197}
-  playerName: player1
   dominoControllers: []
   tileController: {fileID: 486113554}
+  historyController: {fileID: 1232068275}
+  startPosition1: -8
+  startPosition2: 8
+  playerName: player1
 --- !u!1 &1232068274
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb0e00a19ca74d45bbe0152cbc921da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interval: 0
   spinner: {fileID: 0}
   horizontalDominoes: []
   verticalDominoes: []
