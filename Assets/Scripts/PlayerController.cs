@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public int startPosition2 = 8;
     public string playerName;
     private int cnt;
+    private bool isFirstDeal = true;
 
 
 	void Start()
@@ -273,6 +274,144 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public bool HasCardToPlay()
+    {
+        if (dominoControllers.Count == 0)
+        {
+            return false;
+        }
+        else
+        {
+            int horizontalLen = historyController.horizontalDominoes.Count;
+            int verticalLen = historyController.verticalDominoes.Count;
+            //there is no cards on play zone(the first card to play)
+            if (horizontalLen == 0 && verticalLen == 0)
+            {
+                return true;
+            }
+            else
+            {
+                List<DominoController> validPlaces = new List<DominoController>();
+                if (horizontalLen != 0)
+                {
+                    validPlaces.Add(historyController.horizontalDominoes[0]);
+                    validPlaces.Add(historyController.horizontalDominoes[horizontalLen-1]);
+                }
+                if (verticalLen != 0)
+                {
+                    validPlaces.Add(historyController.verticalDominoes[0]);
+                    validPlaces.Add(historyController.verticalDominoes[verticalLen-1]);
+                }
+                foreach (DominoController playingDomino in dominoControllers)
+                {
+                    if (validPlaces.Count != 0)
+                    {
+                        foreach (DominoController toplaceDomino in validPlaces)
+                        {
+                            if (horizontalLen != 0)
+                            {
+                                if (toplaceDomino == historyController.horizontalDominoes[0])
+                                {
+                                    //vertical toplaceDomino
+                                    if (toplaceDomino.leftValue == -1)
+                                    {
+                                        if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                    //horizontal toplaceDomino
+                                    else
+                                    {
+                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                        {
+
+                                            return true;
+                                        }
+
+                                    }
+                                }
+                                if (toplaceDomino == historyController.horizontalDominoes[horizontalLen-1])
+                                {
+                                    //vertival topalceDomino
+                                    if (toplaceDomino.leftValue == -1)
+                                    {
+                                        if (toplaceDomino.upperValue == playingDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                    //horizontal topalceDomino
+                                    else
+                                    {
+                                        if (playingDomino.upperValue == toplaceDomino.rightValue || playingDomino.lowerValue == toplaceDomino.rightValue)
+                                        {
+                                            return true;
+                                        }
+
+                                    }
+                                } 
+                            }
+
+                            if (verticalLen != 0)
+                            {
+                                if (toplaceDomino == historyController.verticalDominoes[0])
+                                {
+                                    //vertical topalceDomino
+                                    if (toplaceDomino.leftValue == -1)
+                                    {
+
+                                        if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                    //horizontal toplaceDomino
+                                    else
+                                    {
+                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                }
+                                if (toplaceDomino == historyController.verticalDominoes[verticalLen-1])
+                                {
+                                    //vertical toplaceDomino
+                                    if (toplaceDomino.leftValue == -1)
+                                    {
+                                        if(playingDomino.upperValue == toplaceDomino.lowerValue || playingDomino.lowerValue == toplaceDomino.lowerValue)
+                                        {
+
+                                            return true;
+                                        }
+
+                                    }
+                                    //horizontal toplaceDomino
+                                    else
+                                    {
+                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                        {
+
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+       
+        return false;     
+        
+    }
+
+
     public void Selecteffect(DominoController selected)
     {
         Vector3 temp = selected.transform.position;
@@ -311,8 +450,15 @@ public class PlayerController : MonoBehaviour
     public void AddDomino()
     {
         // TOFIX
-        dominoControllers.AddRange(tileController.Deal());
-
+//        dominoControllers.AddRange(tileController.Deal());
+        if (isFirstDeal)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                dominoControllers.Add(tileController.DrawCard());
+            }
+            isFirstDeal = false;
+        }
         if (playerName == "player1")
         {
             cnt = 0;
@@ -343,7 +489,6 @@ public class PlayerController : MonoBehaviour
         //ToFix
         if (chosenDomino != null && readytoplay == true)
         {
-//            registerDomino();
             if (playerName == "player1")
             {
                 
@@ -352,7 +497,6 @@ public class PlayerController : MonoBehaviour
             }
             else if (playerName == "player2")
             {
-//                registerDomino();
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
             }
             dominoControllers.Remove(chosenDomino);
@@ -376,12 +520,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void DrawDomino(DominoController dominoController)
+    public void DrawDomino()
     {
-//        tileController = new TileController();
-//        if (tileController.IsDrawable())
-//        {
-//            
-//        }
+        if (HasCardToPlay())
+        {
+            return;
+        }
+        else
+        {
+            while (!HasCardToPlay())
+            {
+                //toFix
+//                if (tileController.DrawCard() != null)
+//                {
+                    dominoControllers.Add(tileController.DrawCard());
+                    AddDomino(); 
+//                }
+
+            }
+        }
+
     }
 }

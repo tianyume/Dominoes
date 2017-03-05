@@ -62,7 +62,23 @@ public class TileController : MonoBehaviour
         Shuffle();
         return ret;
      }
-
+    public DominoController DrawCard()
+    {
+        if (IsDrawable())
+        {
+            for (int i = 0; i < NUMTILE; i++)
+            {
+                if (dominoes[i].ownership == GameRole.BoneYard)
+                {
+                    dominoes[i].ownership = GameRole.Player1;
+                    DominoController temp = (DominoController)Instantiate(exampleDomino);
+                    temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
+                    return temp;
+                }
+            }
+        }
+        return null;
+    }
     public bool IsDrawable()
     {
         foreach (DominoController temp in dominoes)
