@@ -530,12 +530,20 @@ public class PlayerController : MonoBehaviour
         {
             while (!HasCardToPlay())
             {
-                DominoController addedDomino = tileController.DrawCard();
-                if (addedDomino != null)
+                if (tileController.IsDrawable())
                 {
-                    dominoControllers.Add(addedDomino);
-                    AddDomino(); 
+                    DominoController addedDomino = tileController.DrawCard();
+                    if (addedDomino != null)
+                    {
+                        dominoControllers.Add(addedDomino);
+                        AddDomino(); 
+                    }
                 }
+                else
+                {
+                    return;
+                }
+
 
             }
         }
