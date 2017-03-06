@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameController : MonoBehaviour
     public HistoryController history;
     public PlayerController player1;
     public PlayerController player2;
+    public Text scoreText1;
+    public Text scoreText2;
 
     public int scoreOfPlayer1;
     public int scoreOfPlayer2;
@@ -93,6 +96,7 @@ public class GameController : MonoBehaviour
             {
                 scoreOfPlayer2 += sum;
             }
+            UpdateScore();
         }
     }
 
@@ -113,6 +117,7 @@ public class GameController : MonoBehaviour
             {
                 scoreOfPlayer1 += (sum / 5 + 1) * 5;
             }
+            UpdateScore();
         }
         else
         {
@@ -129,6 +134,7 @@ public class GameController : MonoBehaviour
             {
                 scoreOfPlayer2 += (sum / 5 + 1) * 5;
             }
+            UpdateScore();
         }
     }
 
@@ -195,5 +201,17 @@ public class GameController : MonoBehaviour
             }
         }
         return sum;
+    }
+
+    void UpdateScore()
+    {
+        Debug.Log(scoreText1.text);
+        scoreText1.text = "Player1: " + scoreOfPlayer1;
+        scoreText2.text = "Player2: " + scoreOfPlayer2;
+    }
+    
+    void ResetGameTurn()
+    {
+
     }
 }
