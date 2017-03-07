@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 public class GameController : MonoBehaviour
 {
@@ -13,13 +14,24 @@ public class GameController : MonoBehaviour
     public Text scoreText1;
     public Text scoreText2;
 
-    public int scoreOfPlayer1;
-    public int scoreOfPlayer2;
+    private bool isPlayer1Blocked;
+    private bool isPlayer2Blocked;
+    private int scoreOfPlayer1;
+    private int scoreOfPlayer2;
 
     void Start()
     {
+        Assert.IsNotNull(tile);
+        Assert.IsNotNull(history);
+        Assert.IsNotNull(player1);
+        Assert.IsNotNull(player2);
+
+        isPlayer1Blocked = false;
+        isPlayer2Blocked = false;
         scoreOfPlayer1 = 0;
         scoreOfPlayer2 = 0;
+
+        // Reset a hand
         tile.Shuffle();
         player1.AddDomino();
         player2.AddDomino();
@@ -28,6 +40,17 @@ public class GameController : MonoBehaviour
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
     {
+        Assert.IsNotNull(player);
+        Assert.IsNotNull(domino);
+
+        if (player == player1)
+        {
+            isPlayer1Blocked = false;
+        }
+        else
+        {
+            isPlayer2Blocked = false;
+        }
         // Put the played domino into history
         history.Add(domino, anotherDomino);
         // Calculate the score of current play
@@ -37,11 +60,19 @@ public class GameController : MonoBehaviour
         if (player.dominoControllers.Count == 0)
         {
             // Calculate the score by ending a hand
-            ScoreByEndingHand(player);
+            if (player == player1)
+            {
+                ScoreByEndingHand(player, GetSumOfDominoInHand(player2));
+            }
+            else
+            {
+                ScoreByEndingHand(player, GetSumOfDominoInHand(player1));
+            }
             if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
             {
                 return;
             }
+            // TOFIX: Reset a hand
             tile.Shuffle();
             player1.AddDomino();
             player2.AddDomino();
@@ -83,6 +114,36 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void PlayerIsBlocked(PlayerController player)
+    {
+        Assert.IsNotNull(player);
+
+        if (player == player1)
+        {
+            isPlayer1Blocked = true;
+        }
+        else
+        {
+            isPlayer2Blocked = true;
+        }
+
+        // Ending a hand
+        if (isPlayer1Blocked && isPlayer2Blocked)
+        {
+            int player1DominoSum = GetSumOfDominoInHand(player1);
+            int player2DominoSum = GetSumOfDominoInHand(player2);
+            if (player1DominoSum > player2DominoSum)
+            {
+                ScoreByEndingHand(player2, player1DominoSum - player2DominoSum);
+            }
+            else
+            {
+                ScoreByEndingHand(player1, player2DominoSum - player1DominoSum);
+            }
+            // TODO: Reset a hand
+        }
+    }
+
     void ScoreByCurrentPlay(PlayerController player)
     {
         int sum = GetSumOfHistoryDominoes();
@@ -100,42 +161,25 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void ScoreByEndingHand(PlayerController player)
+    void ScoreByEndingHand(PlayerController player, int score)
     {
-        if (player == player1)
+        if (score % 5 < 3)
         {
-            int sum = 0;
-            foreach (DominoController domino in player2.dominoControllers)
-            {
-                sum += domino.upperValue + domino.lowerValue;
-            }
-            if (sum % 5 < 3)
-            {
-                scoreOfPlayer1 += sum / 5 * 5;
-            }
-            else
-            {
-                scoreOfPlayer1 += (sum / 5 + 1) * 5;
-            }
-            UpdateScore();
+            score = score / 5 * 5;
         }
         else
         {
-            int sum = 0;
-            foreach (DominoController domino in player1.dominoControllers)
-            {
-                sum += domino.upperValue + domino.lowerValue;
-            }
-            if (sum % 5 < 3)
-            {
-                scoreOfPlayer2 += sum / 5 * 5;
-            }
-            else
-            {
-                scoreOfPlayer2 += (sum / 5 + 1) * 5;
-            }
-            UpdateScore();
+            score = (score / 5 + 1) * 5;
         }
+        if (player == player1)
+        {
+            scoreOfPlayer1 += score;
+        }
+        else
+        {
+            scoreOfPlayer2 += score;
+        }
+        UpdateScore();
     }
 
     int GetSumOfHistoryDominoes()
@@ -203,15 +247,24 @@ public class GameController : MonoBehaviour
         return sum;
     }
 
+    int GetSumOfDominoInHand(PlayerController player)
+    {
+        int sum = 0;
+        foreach (DominoController domino in player.dominoControllers)
+        {
+            sum += domino.upperValue + domino.lowerValue;
+        }
+        return sum;
+    }
+
     void UpdateScore()
     {
-        Debug.Log(scoreText1.text);
         scoreText1.text = "Player1: " + scoreOfPlayer1;
         scoreText2.text = "Player2: " + scoreOfPlayer2;
     }
     
-    void ResetGameTurn()
+    void ResetHand()
     {
-
+        // TODO
     }
 }
