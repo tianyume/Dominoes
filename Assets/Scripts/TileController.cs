@@ -7,7 +7,7 @@ public class TileController : MonoBehaviour
 {
     const int NUMTILE = 28;
     const int MAXNUM = 6;
-    const int NUMDEAL = 5;
+    const int NUMDEAL = 7;
     public DominoController exampleDomino;
     public List<DominoController> dominoes;
     public float startPosition = -19f;
@@ -34,7 +34,7 @@ public class TileController : MonoBehaviour
     }
 
     // For Game
-    public void Reset()
+    public void ResetHand()
     {
         Init();
     }

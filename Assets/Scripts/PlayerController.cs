@@ -453,7 +453,7 @@ public class PlayerController : MonoBehaviour
 //        dominoControllers.AddRange(tileController.Deal());
         if (isFirstDeal)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 7; i++)
             {
                 dominoControllers.Add(tileController.DrawCard());
             }

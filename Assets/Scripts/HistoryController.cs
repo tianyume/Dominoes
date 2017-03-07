@@ -270,12 +270,13 @@ public class HistoryController : MonoBehaviour
         }
     }
 
-    public void Reset()
+    public void ResetHand()
     {
         spinner = null;
         horizontalDominoes.Clear();
         verticalDominoes.Clear();
         isSpinnerPlaced = false;
         center = null;
+        putPosition = PutPosition.NA;
     }
 }
