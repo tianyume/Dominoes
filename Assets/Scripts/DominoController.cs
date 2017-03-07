@@ -84,13 +84,26 @@ public class DominoController : MonoBehaviour
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonDown(0))
         {
-            
-            if (position.x <= transform.position.x + Constants.dominoWidth / 2 && position.x >= transform.position.x - Constants.dominoWidth / 2 && position.y <= transform.position.y + Constants.dominoHeight / 2 && position.y >= transform.position.y - Constants.dominoHeight / 2)
+            if (direction == Direction.Vertical)
             {
-                if (onClick != null)
+                if (position.x <= transform.position.x + Constants.dominoWidth / 2 && position.x >= transform.position.x - Constants.dominoWidth / 2 && position.y <= transform.position.y + Constants.dominoHeight / 2 && position.y >= transform.position.y - Constants.dominoHeight / 2)
                 {
-                    isClicked = !isClicked;
-                    onClick(this);
+                    if (onClick != null)
+                    {
+                        isClicked = !isClicked;
+                        onClick(this);
+                    }
+                }
+            }
+            else
+            {
+                if (position.x <= transform.position.x + Constants.dominoHeight / 2 && position.x >= transform.position.x - Constants.dominoHeight / 2 && position.y <= transform.position.y + Constants.dominoWidth / 2 && position.y >= transform.position.y - Constants.dominoWidth / 2)
+                {
+                    if (onClick != null)
+                    {
+                        isClicked = !isClicked;
+                        onClick(this);
+                    }
                 }
             }
         }

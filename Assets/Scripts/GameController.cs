@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour
     public PlayerController player2;
     public Text scoreText1;
     public Text scoreText2;
-    public Text WinText;
+    public Text winText;
+    public Text turnText;
 
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour
 
         // Start a hand
         StartHand(player1);
+        turnText.text = "Player1's turn";
     }
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour
         // Ending a hand
         if (player.dominoControllers.Count == 0)
         {
+            UpdateTurnText(player);
             // Calculate the score by ending a hand
             if (player == player1)
             {
@@ -78,6 +81,7 @@ public class GameController : MonoBehaviour
         // Or ending a turn
         if (player == player1)
         {
+            UpdateTurnText(player2);
             if (player2.HasCardToPlay())
             {
                 player2.PlayDomino();
@@ -91,6 +95,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            UpdateTurnText(player1);
             if (player1.HasCardToPlay())
             {
                 player1.PlayDomino();
@@ -110,10 +115,12 @@ public class GameController : MonoBehaviour
         if (player == player1)
         {
             isPlayer1Blocked = true;
+            UpdateTurnText(player2);
         }
         else
         {
             isPlayer2Blocked = true;
+            UpdateTurnText(player1);
         }
 
         // Ending a hand
@@ -156,7 +163,7 @@ public class GameController : MonoBehaviour
             {
                 scoreOfPlayer2 += sum;
             }
-            UpdateScore();
+            UpdateScoreTexts();
         }
     }
 
@@ -178,7 +185,7 @@ public class GameController : MonoBehaviour
         {
             scoreOfPlayer2 += score;
         }
-        UpdateScore();
+        UpdateScoreTexts();
     }
 
     int GetSumOfHistoryDominoes()
@@ -256,10 +263,22 @@ public class GameController : MonoBehaviour
         return sum;
     }
 
-    void UpdateScore()
+    void UpdateScoreTexts()
     {
         scoreText1.text = "Player1: " + scoreOfPlayer1;
         scoreText2.text = "Player2: " + scoreOfPlayer2;
+    }
+
+    void UpdateTurnText(PlayerController layer)
+    {
+        if (layer == player1)
+        {
+            turnText.text = "Player1's turn";
+        }
+        else
+        {
+            turnText.text = "Player2's turn";
+        }
     }
     
     void ResetHand()
@@ -282,11 +301,11 @@ public class GameController : MonoBehaviour
     {
         if (scoreOfPlayer1 >= maxScore)
         {
-            WinText.text = "Player1 Wins!";
+            winText.text = "Player1 Wins!";
         }
         else
         {
-            WinText.text = "Player2 Wins!";
+            winText.text = "Player2 Wins!";
         }        
     }
 }
