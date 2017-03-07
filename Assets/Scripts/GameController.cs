@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public PlayerController player2;
     public Text scoreText1;
     public Text scoreText2;
+    public Text WinText;
 
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
@@ -67,6 +68,7 @@ public class GameController : MonoBehaviour
             }
             if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
             {
+                ShowPlayerWin();
                 return;
             }
             ResetHand();
@@ -274,5 +276,17 @@ public class GameController : MonoBehaviour
         player1.AddDomino();
         player2.AddDomino();
         player.PlayDomino();
+    }
+
+    void ShowPlayerWin()
+    {
+        if (scoreOfPlayer1 >= maxScore)
+        {
+            WinText.text = "Player1 Wins!";
+        }
+        else
+        {
+            WinText.text = "Player2 Wins!";
+        }        
     }
 }
