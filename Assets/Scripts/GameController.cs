@@ -31,11 +31,8 @@ public class GameController : MonoBehaviour
         scoreOfPlayer1 = 0;
         scoreOfPlayer2 = 0;
 
-        // Reset a hand
-        tile.Shuffle();
-        player1.AddDomino();
-        player2.AddDomino();
-        player1.PlayDomino();
+        // Start a hand
+        StartHand(player1);
     }
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
@@ -72,18 +69,8 @@ public class GameController : MonoBehaviour
             {
                 return;
             }
-            // TOFIX: Reset a hand
-            tile.Shuffle();
-            player1.AddDomino();
-            player2.AddDomino();
-            if (player == player1)
-            {
-                player1.PlayDomino();
-            }
-            else
-            {
-                player2.PlayDomino();
-            }
+            ResetHand();
+            StartHand(player);
             return;
         }
         // Or ending a turn
@@ -140,7 +127,17 @@ public class GameController : MonoBehaviour
             {
                 ScoreByEndingHand(player1, player2DominoSum - player1DominoSum);
             }
-            // TODO: Reset a hand
+            // Reset a hand
+            ResetHand();
+            // Start a hand
+            if (player1DominoSum > player2DominoSum)
+            {
+                StartHand(player2);
+            }
+            else
+            {
+                StartHand(player1);
+            }
         }
     }
 
@@ -265,6 +262,17 @@ public class GameController : MonoBehaviour
     
     void ResetHand()
     {
-        // TODO
+        tile.ResetHand();
+        history.ResetHand();
+        player1.ResetHand();
+        player2.ResetHand();
+    }
+
+    void StartHand(PlayerController player)
+    {
+        tile.Shuffle();
+        player1.AddDomino();
+        player2.AddDomino();
+        player.PlayDomino();
     }
 }

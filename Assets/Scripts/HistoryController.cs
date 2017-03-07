@@ -273,10 +273,20 @@ public class HistoryController : MonoBehaviour
     public void ResetHand()
     {
         spinner = null;
+        center = null;
+        foreach (DominoController domino in horizontalDominoes)
+        {
+            Destroy(domino.gameObject);
+        }
+        foreach (DominoController domino in verticalDominoes)
+        {
+            Destroy(domino.gameObject);
+        }
         horizontalDominoes.Clear();
         verticalDominoes.Clear();
         isSpinnerPlaced = false;
-        center = null;
+//        center.transform.position = new Vector3(100, 0, 0);
+//        center = null;
         putPosition = PutPosition.NA;
     }
 }

@@ -24,7 +24,7 @@ public class TileController : MonoBehaviour
     void Update()
     {
         // Domino animation
-        ShowTile();
+//        ShowTile();
     }
 
     // For Game
@@ -36,32 +36,37 @@ public class TileController : MonoBehaviour
     // For Game
     public void ResetHand()
     {
-        Init();
+        foreach (DominoController domino in dominoes)
+        {
+            domino.ownership = GameRole.BoneYard;
+        }
+        
     }
 
-    // For Player
-    public List<DominoController> Deal()
-    {
-        List<DominoController> ret = new List<DominoController>(NUMDEAL);
-        int count = 0;
-        for (int i = 0; i < NUMTILE; i++)
-        {
-            if (dominoes[i].ownership == GameRole.BoneYard)
-            {
-                count++;
-                dominoes[i].ownership = GameRole.Player1;
-                DominoController temp = (DominoController)Instantiate(exampleDomino);
-                temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
-                ret.Add(temp);
-                if (count >= NUMDEAL)
-                {
-                    break;
-                }
-            }
-        }
-        Shuffle();
-        return ret;
-     }
+//    // For Player
+//    public List<DominoController> Deal()
+//    {
+//        List<DominoController> ret = new List<DominoController>(NUMDEAL);
+//        int count = 0;
+//        for (int i = 0; i < NUMTILE; i++)
+//        {
+//            if (dominoes[i].ownership == GameRole.BoneYard)
+//            {
+//                count++;
+//                dominoes[i].ownership = GameRole.Player1;
+//                DominoController temp = (DominoController)Instantiate(exampleDomino);
+//                temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
+//                ret.Add(temp);
+//                if (count >= NUMDEAL)
+//                {
+//                    break;
+//                }
+//            }
+//        }
+//        Shuffle();
+//        return ret;
+//     }
+
     public DominoController DrawCard()
     {
         if (IsDrawable())
@@ -72,6 +77,7 @@ public class TileController : MonoBehaviour
                 {
                     dominoes[i].ownership = GameRole.Player1;
                     DominoController temp = (DominoController)Instantiate(exampleDomino);
+                    temp.ownership = GameRole.Player1;
                     temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
                     return temp;
                 }
@@ -93,10 +99,7 @@ public class TileController : MonoBehaviour
 
     void Init()
     {
-        if (dominoes.Count>0)
-        {
-            dominoes.Clear();            
-        }
+        dominoes.Clear();
         for (int i = 0; i <= MAXNUM; i++)
         {
             for (int j = i; j <= MAXNUM; j++)
@@ -105,15 +108,16 @@ public class TileController : MonoBehaviour
                 temp.SetUpperLowerValues(i, j);
                 dominoes.Add(temp);
             }
-        }       
+        } 
+        ShowTile();
     }
 
     void ShowTile()
     {        
         for (int i = 0; i < dominoes.Count; i++)
         {
-            dominoes[i].transform.position = new Vector3(startPosition+(float)i*interval,0,0);
-            dominoes[i].transform.localScale = new Vector3(localScale, localScale, 0);
+//            dominoes[i].transform.position = new Vector3(startPosition+(float)i*interval,0,0);
+//            dominoes[i].transform.localScale = new Vector3(localScale, localScale, 0);
             //if (dominoes[i].ownership != GameRole.BoneYard)
             //{
                 dominoes[i].transform.position = new Vector3(100, 0, 0);

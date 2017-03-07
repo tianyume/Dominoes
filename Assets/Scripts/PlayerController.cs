@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private const int kNumberOfCardsToDraw = 7;
+
     public GameController gameController;
     public List<DominoController> dominoControllers;
     public TileController tileController;
@@ -37,6 +39,19 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+
+    public void ResetHand()
+    {
+        foreach (DominoController domino in dominoControllers)
+        {
+            Destroy(domino.gameObject);
+        }
+        dominoControllers.Clear();
+        chosenDomino = null;
+        chosenPlace = null;
+        readytoplay = false;
+        isFirstDeal = true;
     }
 
 
@@ -453,7 +468,7 @@ public class PlayerController : MonoBehaviour
 //        dominoControllers.AddRange(tileController.Deal());
         if (isFirstDeal)
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < kNumberOfCardsToDraw; i++)
             {
                 dominoControllers.Add(tileController.DrawCard());
             }
@@ -489,6 +504,7 @@ public class PlayerController : MonoBehaviour
         //ToFix
         if (chosenDomino != null && readytoplay == true)
         {
+            dominoControllers.Remove(chosenDomino);
             if (playerName == "player1")
             {
                 
@@ -499,7 +515,6 @@ public class PlayerController : MonoBehaviour
             {
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
             }
-            dominoControllers.Remove(chosenDomino);
         }
                      
     }
@@ -543,8 +558,6 @@ public class PlayerController : MonoBehaviour
                 {
                     return;
                 }
-
-
             }
         }
 
