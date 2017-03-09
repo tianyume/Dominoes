@@ -43,30 +43,6 @@ public class TileController : MonoBehaviour
         
     }
 
-//    // For Player
-//    public List<DominoController> Deal()
-//    {
-//        List<DominoController> ret = new List<DominoController>(NUMDEAL);
-//        int count = 0;
-//        for (int i = 0; i < NUMTILE; i++)
-//        {
-//            if (dominoes[i].ownership == GameRole.BoneYard)
-//            {
-//                count++;
-//                dominoes[i].ownership = GameRole.Player1;
-//                DominoController temp = (DominoController)Instantiate(exampleDomino);
-//                temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
-//                ret.Add(temp);
-//                if (count >= NUMDEAL)
-//                {
-//                    break;
-//                }
-//            }
-//        }
-//        Shuffle();
-//        return ret;
-//     }
-
     public DominoController DrawCard()
     {
         if (IsDrawable())
