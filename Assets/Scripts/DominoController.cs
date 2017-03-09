@@ -90,7 +90,7 @@ public class DominoController : MonoBehaviour
                 {
                     if (onClick != null)
                     {
-                        isClicked = !isClicked;
+                        //isClicked = !isClicked;
                         onClick(this);
                     }
                 }

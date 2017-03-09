@@ -268,6 +268,7 @@ MonoBehaviour:
   dominoControllers: []
   tileController: {fileID: 486113554}
   historyController: {fileID: 1232068275}
+  turnText: {fileID: 896247810}
   startPosition1: -8
   startPosition2: 8
   playerName: player2
@@ -389,6 +390,7 @@ MonoBehaviour:
   dominoControllers: []
   tileController: {fileID: 486113554}
   historyController: {fileID: 1232068275}
+  turnText: {fileID: 896247810}
   startPosition1: -8
   startPosition2: 8
   playerName: player1

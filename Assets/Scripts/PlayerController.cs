@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private DominoController chosenDomino;
     private DominoController chosenPlace;
     private bool readytoplay = false;
+
+    public Text turnText;
 
 
     public int startPosition1 = -8;
@@ -62,6 +65,21 @@ public class PlayerController : MonoBehaviour
         Debug.Log(clickedDomino.leftValue);
         bool preflag = false;
         readytoplay = false;
+        string playerturn = "";
+
+        if (turnText.text.Equals("Player1's turn"))
+        {
+            playerturn = "player1";
+        }
+        else
+        {
+            playerturn = "player2";
+        }
+
+        if (!playerturn.Equals(playerName))
+        {
+            return;
+        }
 
         //set clicked domino
         foreach (DominoController domino in dominoControllers)
@@ -70,23 +88,29 @@ public class PlayerController : MonoBehaviour
             {           
                 preflag = true;    
                 //move clicked card
-                Selecteffect(clickedDomino);
+                
                 registerDomino();
 
 
                 if (chosenDomino == null)
                 {
                     chosenDomino = clickedDomino;
+                    clickedDomino.isClicked = true;
+                    Selecteffect(clickedDomino);
                 }
                 else if (clickedDomino == chosenDomino)
                 {
                     chosenDomino = null;
+                    clickedDomino.isClicked = false;
+                    Selecteffect(clickedDomino);
                 }
                 else if (clickedDomino != chosenDomino)
                 {
                     chosenDomino.isClicked = false;
                     Selecteffect(chosenDomino);
                     chosenDomino = clickedDomino;
+                    clickedDomino.isClicked = true;
+                    Selecteffect(clickedDomino);
                 }
                 break;
             }
@@ -476,7 +500,7 @@ public class PlayerController : MonoBehaviour
         }
         if (playerName == "player1")
         {
-            cnt = 0;
+            cnt = -dominoControllers.Count / 2;
             foreach (DominoController domino in dominoControllers)
             {
                 // TOFIX
@@ -486,7 +510,7 @@ public class PlayerController : MonoBehaviour
         }
         else if(playerName == "player2")
         {
-            cnt = 0;
+            cnt = -dominoControllers.Count / 2; ;
             foreach (DominoController domino in dominoControllers)
             {
                 // TOFIX
@@ -509,11 +533,13 @@ public class PlayerController : MonoBehaviour
             {
                 
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
+                AddDomino();
 
             }
             else if (playerName == "player2")
             {
                 gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
+                AddDomino();
             }
         }
                      
