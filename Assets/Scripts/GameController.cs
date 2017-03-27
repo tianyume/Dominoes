@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public TileController tile;
     public HistoryController history;
     public PlayerController player1;
-    public PlayerController player2;
+    public AIController player2;
     public Text scoreText1;
     public Text scoreText2;
     public Text winText;
@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
             return;
         }
         // Or ending a turn
-        if (player == player1)
+        if (player.playerName == player1.playerName)
         {
             UpdateTurnText(player2);
             if (player2.HasCardToPlay())
@@ -294,7 +294,14 @@ public class GameController : MonoBehaviour
         tile.Shuffle();
         player1.AddDomino();
         player2.AddDomino();
-        player.PlayDomino();
+        if (player.GetType() == typeof(AIController))
+        {
+            player2.PlayDomino();
+        }
+        else
+        {
+            player.PlayDomino();
+        }
     }
 
     void ShowPlayerWin()

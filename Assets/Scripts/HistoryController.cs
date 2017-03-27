@@ -74,19 +74,19 @@ public class HistoryController : MonoBehaviour
         }
         if (playedDomino.direction == DominoController.Direction.Horizontal)
         {
-            Debug.Log("p horizontal");
+//            Debug.Log("p horizontal");
         }
         if (playedDomino.direction == DominoController.Direction.Vertical)
         {
-            Debug.Log("p vertical");
+//            Debug.Log("p vertical");
         }
         if (historyDomino.direction == DominoController.Direction.Horizontal)
         {
-            Debug.Log("h horizontal");
+//            Debug.Log("h horizontal");
         }
         if (historyDomino.direction == DominoController.Direction.Vertical)
         {
-            Debug.Log("h vertical");
+//            Debug.Log("h vertical");
         }
 
 //         if historyDomino not null
@@ -167,7 +167,7 @@ public class HistoryController : MonoBehaviour
         
         if (putPosition == PutPosition.Left)
         {
-            Debug.Log("place left");
+//            Debug.Log("place left");
             horizontalDominoes.Insert(0, playedDomino);
             // set spinner
             if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
@@ -194,7 +194,7 @@ public class HistoryController : MonoBehaviour
         }
         else if (putPosition == PutPosition.Right)
         {
-            Debug.Log("place right");
+//            Debug.Log("place right");
             horizontalDominoes.Add(playedDomino);
             // set spinner
             if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
@@ -222,7 +222,7 @@ public class HistoryController : MonoBehaviour
         //VERTICAL
         else if (putPosition == PutPosition.Up)
         {
-            Debug.Log("place up");
+//            Debug.Log("place up");
             verticalDominoes.Insert(0, playedDomino);
 
             // both vertical
@@ -242,7 +242,7 @@ public class HistoryController : MonoBehaviour
         }
         else if (putPosition == PutPosition.Down)
         {
-            Debug.Log("place down");
+//            Debug.Log("place down");
             verticalDominoes.Add(playedDomino);
 
             // both vertical

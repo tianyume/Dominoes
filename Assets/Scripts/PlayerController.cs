@@ -148,8 +148,6 @@ public class PlayerController : MonoBehaviour
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_left,h_vertical,p_normal");
                             return;
                         }
@@ -160,8 +158,6 @@ public class PlayerController : MonoBehaviour
                         {
                             chosenPlace = clickedDomino;
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_left,h_horizontal,p_special");
                             return;
                         }
@@ -173,8 +169,6 @@ public class PlayerController : MonoBehaviour
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_left,h_horizontal,p_normal");
                             return;
                         }
@@ -192,8 +186,6 @@ public class PlayerController : MonoBehaviour
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_right,h_vertical,p_normal");
                             return;
                         }
@@ -204,8 +196,6 @@ public class PlayerController : MonoBehaviour
                         {
                             chosenPlace = clickedDomino;
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_right,h_horizontal,p_special");
                             return;
                         }
@@ -217,8 +207,6 @@ public class PlayerController : MonoBehaviour
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_right,h_horizontal,p_normal");
                             return;
                         }
@@ -233,8 +221,6 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_top,h_vertical,p_special");
                             return;
                         }
@@ -244,8 +230,6 @@ public class PlayerController : MonoBehaviour
                             if (chosenDomino.upperValue == clickedDomino.upperValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_top,h_vertical,p_normal");
                             return;
                         }
@@ -258,8 +242,6 @@ public class PlayerController : MonoBehaviour
                             if (chosenDomino.upperValue == clickedDomino.leftValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_top,h_horizontal,p_normal");
                             return;
                         }
@@ -274,8 +256,6 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_bottom,h_vertical,p_special");
                             return;
                         }
@@ -285,8 +265,6 @@ public class PlayerController : MonoBehaviour
                             if (chosenDomino.lowerValue == clickedDomino.lowerValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_bottom,h_vertical,p_normal");
                             return;
                         }
@@ -299,8 +277,6 @@ public class PlayerController : MonoBehaviour
                             if (chosenDomino.lowerValue == clickedDomino.leftValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             PlayDomino();
-                            chosenDomino = null;
-                            chosenPlace = null;
                             Debug.Log("excute h_bottom,h_horizontal,p_normal");
                             return;
                         }
@@ -529,17 +505,27 @@ public class PlayerController : MonoBehaviour
         if (chosenDomino != null && readytoplay == true)
         {
             dominoControllers.Remove(chosenDomino);
+            AddDomino();
             if (playerName == "player1")
             {
-                
-                gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
-                AddDomino();
+                DominoController tcd,tcp;
+                tcd = chosenDomino;
+                tcp = chosenPlace;
+                chosenDomino = null;
+                chosenPlace = null;
+                gameController.PlayerPlayDomino(this, tcd, tcp);
+//                AddDomino();
 
             }
             else if (playerName == "player2")
             {
-                gameController.PlayerPlayDomino(this, chosenDomino, chosenPlace);
-                AddDomino();
+                DominoController tcd,tcp;
+                tcd = chosenDomino;
+                tcp = chosenPlace;
+                chosenDomino = null;
+                chosenPlace = null;
+                gameController.PlayerPlayDomino(this, tcd, tcp);
+//                AddDomino();
             }
         }
                      

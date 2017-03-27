@@ -74,6 +74,9 @@ public class DominoController : MonoBehaviour
     public float offsetHorizontal;
     public float offsetVertical;
 
+    float beforeClickPositionX = 0;
+    float beforeClickPositionY = 0;
+
     public bool isClicked = false;
 
     public delegate void OnClickDelegate(DominoController dominoController);
@@ -84,9 +87,17 @@ public class DominoController : MonoBehaviour
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Input.GetMouseButtonDown(0))
         {
+
+            beforeClickPositionX = transform.position.x;
+            beforeClickPositionY = transform.position.y;
+            
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
             if (direction == Direction.Vertical)
             {
-                if (position.x <= transform.position.x + Constants.dominoWidth / 2 && position.x >= transform.position.x - Constants.dominoWidth / 2 && position.y <= transform.position.y + Constants.dominoHeight / 2 && position.y >= transform.position.y - Constants.dominoHeight / 2)
+                if (position.x <= beforeClickPositionX + Constants.dominoWidth / 2 && position.x >= beforeClickPositionX - Constants.dominoWidth / 2 && position.y <= beforeClickPositionY + Constants.dominoHeight / 2 && position.y >= beforeClickPositionY - Constants.dominoHeight / 2)
                 {
                     if (onClick != null)
                     {
@@ -97,11 +108,11 @@ public class DominoController : MonoBehaviour
             }
             else
             {
-                if (position.x <= transform.position.x + Constants.dominoHeight / 2 && position.x >= transform.position.x - Constants.dominoHeight / 2 && position.y <= transform.position.y + Constants.dominoWidth / 2 && position.y >= transform.position.y - Constants.dominoWidth / 2)
+                if (position.x <= beforeClickPositionX + Constants.dominoHeight / 2 && position.x >= beforeClickPositionX - Constants.dominoHeight / 2 && position.y <= beforeClickPositionY + Constants.dominoWidth / 2 && position.y >= beforeClickPositionY - Constants.dominoWidth / 2)
                 {
                     if (onClick != null)
                     {
-                        isClicked = !isClicked;
+//                        isClicked = !isClicked;
                         onClick(this);
                     }
                 }
