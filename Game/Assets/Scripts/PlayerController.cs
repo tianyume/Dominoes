@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
 
     public void DominoOnClick(DominoController clickedDomino)
     {
-        Debug.Log(clickedDomino.upperValue);
-        Debug.Log(clickedDomino.leftValue);
+        //Debug.Log(clickedDomino.upperValue);
+        //Debug.Log(clickedDomino.leftValue);
         bool preflag = false;
         readytoplay = false;
         string playerturn = "";
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         if (!preflag && chosenDomino != null)
         {
             readytoplay = true;
-            Debug.Log(playerName);
+            //Debug.Log(playerName);
         }
 
         if (chosenDomino != null)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HistoryController : MonoBehaviour
 {
     float interval = 0.2f;
-    float dominoeScale = 1.5f;
+    float dominoScale = 1.5f;
     float startPositionX = 0.0f;
     float startPositionY = 0.0f;
     public DominoController spinner;
@@ -14,9 +14,19 @@ public class HistoryController : MonoBehaviour
     bool isSpinnerPlaced;
     DominoController center;
     PutPosition putPosition;
-    int numberLeft, numberRight, numberUp, numberDown;
-    float generalHorizontalOffset = 0.0f;
-    float generalVerticalOffset = 0.0f;
+    //int numberLeft, numberRight, numberUp, numberDown;
+    //float generalHorizontalOffset = 0.0f;
+    //float generalVerticalOffset = 0.0f;
+    float upperBound = 5f, lowerBound = -5f;
+    float leftBound = -10f, rightBound = 10f;
+    Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
+    Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
+
+    // store origin position and rotations
+    List<Vector3> horizontalPositions;
+    List<Vector3> verticalPositions;
+    List<Quaternion> horizontalRotations;
+    List<Quaternion> verticalRotations;
 
     enum PutPosition
     {
@@ -31,17 +41,54 @@ public class HistoryController : MonoBehaviour
     {
         horizontalDominoes = new List<DominoController>(28);
         verticalDominoes = new List<DominoController>(28);
+        horizontalPositions = new List<Vector3>(28);
+        verticalPositions = new List<Vector3>(28);
+        horizontalRotations = new List<Quaternion>(28);
+        verticalRotations = new List<Quaternion>(28);
         isSpinnerPlaced = false;
-        numberLeft = 0;
-        numberRight = 0;
-        numberUp = 0;
-        numberDown = 0;
+//        numberLeft = 0;
+//        numberRight = 0;
+//        numberUp = 0;
+//        numberDown = 0;
     }
 
-    void SetPlayedDominoPosition(DominoController playedDomino)
+    // calculate dominoes' original position
+    Vector3 OriginalPosition(DominoController playedDomino)
     {
-        playedDomino.transform.position = new Vector3(startPositionX + generalHorizontalOffset + playedDomino.offsetHorizontal, startPositionY + generalVerticalOffset + playedDomino.offsetVertical);
-        playedDomino.transform.localScale = new Vector3(dominoeScale, dominoeScale, 0);
+        Vector3 temp = new Vector3(startPositionX + playedDomino.offsetHorizontal, startPositionY + playedDomino.offsetVertical);
+        playedDomino.transform.position = temp;
+        playedDomino.transform.localScale = new Vector3(dominoScale, dominoScale, 0); 
+        if (temp.x < leftBound && leftMost == Vector3.zero && playedDomino.direction!=DominoController.Direction.Vertical)
+        {
+            leftMost = temp;
+        }
+        else if (temp.x > rightBound && rightMost == Vector3.zero && playedDomino.direction!=DominoController.Direction.Vertical)
+        {
+            rightMost = temp;
+        }
+        else if (temp.y < lowerBound && downMost == Vector3.zero && playedDomino.direction!=DominoController.Direction.Horizontal)
+        {
+            downMost = temp;
+        }
+        else if (temp.y > upperBound && upMost == Vector3.zero && playedDomino.direction!=DominoController.Direction.Horizontal)
+        {
+            upMost = temp;
+        }
+        return temp;
+    }
+
+    void SetPlayedDominoPosition(DominoController playedDomino, Vector3 pos, Quaternion rot)
+    {
+        playedDomino.transform.position = pos;              
+        playedDomino.transform.rotation = rot;
+    }
+
+    void SetRotateDomino(DominoController playedDomino, Vector3 pos)
+    {
+        Debug.Log("rotate pos: "+pos.x+" "+pos.y);
+        Debug.Log(playedDomino.leftValue+" "+playedDomino.rightValue);
+        playedDomino.transform.RotateAround(pos, new Vector3(0, 0, 1), -90f);
+        Debug.Log("after rotate: " + playedDomino.transform.position.x + " " + playedDomino.transform.position.y);
     }
 
     public void Add(DominoController playedDomino, DominoController historyDomino)
@@ -57,39 +104,28 @@ public class HistoryController : MonoBehaviour
             center = playedDomino;
             center.offsetHorizontal = 0.0f;
             center.offsetVertical = 0.0f;
-            // Set Spinner                
+            // Set Spinner        
+            Vector3 tempVector = OriginalPosition(playedDomino);
             if (playedDomino.direction == DominoController.Direction.Vertical)
             {
                 isSpinnerPlaced = true;
                 spinner = playedDomino;
                 horizontalDominoes.Add(playedDomino);
-                verticalDominoes.Add(playedDomino);
+                verticalDominoes.Add(playedDomino);               
+                horizontalPositions.Add(new Vector3(playedDomino.transform.position.x, playedDomino.transform.position.y));
+                verticalPositions.Add(new Vector3(playedDomino.transform.position.x, playedDomino.transform.position.y));
+                horizontalRotations.Add(playedDomino.transform.rotation);
+                verticalRotations.Add(playedDomino.transform.rotation);
             }
             else
             {
                 horizontalDominoes.Add(playedDomino);
+                horizontalPositions.Add(new Vector3(playedDomino.transform.position.x, playedDomino.transform.position.y));
+                horizontalRotations.Add(playedDomino.transform.rotation);
             }
-            SetPlayedDominoPosition(playedDomino);
+            //playedDomino.transform.RotateAround(playedDomino.transform.position, new Vector3(0,0,1), -90f);
             return;
         }
-        if (playedDomino.direction == DominoController.Direction.Horizontal)
-        {
-//            Debug.Log("p horizontal");
-        }
-        if (playedDomino.direction == DominoController.Direction.Vertical)
-        {
-//            Debug.Log("p vertical");
-        }
-        if (historyDomino.direction == DominoController.Direction.Horizontal)
-        {
-//            Debug.Log("h horizontal");
-        }
-        if (historyDomino.direction == DominoController.Direction.Vertical)
-        {
-//            Debug.Log("h vertical");
-        }
-
-//         if historyDomino not null
 
         if (horizontalDominoes.Count > 0 && (historyDomino.Equals(horizontalDominoes[0]) || historyDomino.Equals(horizontalDominoes[horizontalDominoes.Count - 1])))
         {
@@ -169,55 +205,64 @@ public class HistoryController : MonoBehaviour
         {
 //            Debug.Log("place left");
             horizontalDominoes.Insert(0, playedDomino);
-            // set spinner
-            if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
-            {
-                spinner = playedDomino;
-                verticalDominoes.Add(playedDomino);
-                isSpinnerPlaced = true;
-            }
+
+
             // calculate offset
             // both horizontal
             if (historyDomino.direction == playedDomino.direction)
             {
-                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal - dominoeScale * (interval + Constants.dominoHeight);
+                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal - dominoScale * (interval + Constants.dominoHeight);
                 playedDomino.offsetVertical = historyDomino.offsetVertical;
             }
             // one horizontal one vertical
             if (historyDomino.direction != playedDomino.direction)
             {
-                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal - (interval + 0.5f * dominoeScale * (Constants.dominoHeight + Constants.dominoWidth));
+                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal - (interval + 0.5f * dominoScale * (Constants.dominoHeight + Constants.dominoWidth));
                 playedDomino.offsetVertical = historyDomino.offsetVertical;
             }
-//            SetPlayedDominoPosition(playedDomino);
-            numberLeft++;
+            // set spinner
+            if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
+            {
+                spinner = playedDomino;
+                verticalDominoes.Add(playedDomino);
+                verticalPositions.Add(OriginalPosition(playedDomino));
+                verticalRotations.Add(playedDomino.transform.rotation);
+                isSpinnerPlaced = true;
+            }
+            horizontalPositions.Insert(0, OriginalPosition(playedDomino));
+            horizontalRotations.Insert(0, playedDomino.transform.rotation);
+            //numberLeft++;
         }
         else if (putPosition == PutPosition.Right)
         {
 //            Debug.Log("place right");
             horizontalDominoes.Add(playedDomino);
-            // set spinner
-            if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
-            {
-                spinner = playedDomino;
-                verticalDominoes.Add(playedDomino);
-                isSpinnerPlaced = true;
-            }
+
             // calculate offset
             // both horizontal
             if (historyDomino.direction == playedDomino.direction)
             {
-                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal + dominoeScale * (interval + Constants.dominoHeight);
+                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal + dominoScale * (interval + Constants.dominoHeight);
                 playedDomino.offsetVertical = historyDomino.offsetVertical;
             }
             // one horizontal one vertical
             if (historyDomino.direction != playedDomino.direction)
             {
-                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal + (interval + 0.5f * dominoeScale * (Constants.dominoHeight + Constants.dominoWidth));
+                playedDomino.offsetHorizontal = historyDomino.offsetHorizontal + (interval + 0.5f * dominoScale * (Constants.dominoHeight + Constants.dominoWidth));
                 playedDomino.offsetVertical = historyDomino.offsetVertical;
             }
-//            SetPlayedDominoPosition(playedDomino);
-            numberRight++;
+            // set spinner
+            if (!isSpinnerPlaced && playedDomino.direction == DominoController.Direction.Vertical)
+            {
+                spinner = playedDomino;
+                verticalDominoes.Add(playedDomino);
+                verticalPositions.Add(OriginalPosition(playedDomino));
+                verticalRotations.Add(playedDomino.transform.rotation);
+                isSpinnerPlaced = true;
+            }
+            horizontalPositions.Add(OriginalPosition(playedDomino));
+            horizontalRotations.Add(playedDomino.transform.rotation);
+            //numberRight++;
         }
         //VERTICAL
         else if (putPosition == PutPosition.Up)
@@ -228,17 +273,18 @@ public class HistoryController : MonoBehaviour
             // both vertical
             if (historyDomino.direction == playedDomino.direction)
             {
-                playedDomino.offsetVertical = historyDomino.offsetVertical + (interval + dominoeScale * Constants.dominoHeight);
+                playedDomino.offsetVertical = historyDomino.offsetVertical + (interval + dominoScale * Constants.dominoHeight);
                 playedDomino.offsetHorizontal = historyDomino.offsetHorizontal;
             }
             // one horizontal one vertical
             if (historyDomino.direction != playedDomino.direction)
             {
-                playedDomino.offsetVertical = historyDomino.offsetVertical + (interval + 0.5f * dominoeScale * (Constants.dominoHeight + Constants.dominoWidth));
+                playedDomino.offsetVertical = historyDomino.offsetVertical + (interval + 0.5f * dominoScale * (Constants.dominoHeight + Constants.dominoWidth));
                 playedDomino.offsetHorizontal = historyDomino.offsetHorizontal;
             }
-//            SetPlayedDominoPosition(playedDomino);
-            numberUp++;
+            verticalPositions.Insert(0, OriginalPosition(playedDomino));
+            verticalRotations.Insert(0, playedDomino.transform.rotation);
+            //numberUp++;
         }
         else if (putPosition == PutPosition.Down)
         {
@@ -248,33 +294,59 @@ public class HistoryController : MonoBehaviour
             // both vertical
             if (historyDomino.direction == playedDomino.direction)
             {
-                playedDomino.offsetVertical = historyDomino.offsetVertical - (interval + dominoeScale * Constants.dominoHeight);
+                playedDomino.offsetVertical = historyDomino.offsetVertical - (interval + dominoScale * Constants.dominoHeight);
                 playedDomino.offsetHorizontal = historyDomino.offsetHorizontal;
             }
             // one horizontal one vertical
             if (historyDomino.direction != playedDomino.direction)
             {
-                playedDomino.offsetVertical = historyDomino.offsetVertical - (interval + 0.5f * dominoeScale * (Constants.dominoHeight + Constants.dominoWidth));
+                playedDomino.offsetVertical = historyDomino.offsetVertical - (interval + 0.5f * dominoScale * (Constants.dominoHeight + Constants.dominoWidth));
                 playedDomino.offsetHorizontal = historyDomino.offsetHorizontal;
             }
-//            SetPlayedDominoPosition(playedDomino);
-            numberDown++;
+            verticalPositions.Add(OriginalPosition(playedDomino));
+            verticalRotations.Add(playedDomino.transform.rotation);
+            //numberDown++;
         }
         else
         {
             throw new ArgumentException("No valid historyDomino", "historyDomino");
         }
         // Set Dominoes Position
-        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.5f * dominoeScale * (Constants.dominoHeight + interval);
-        generalVerticalOffset = (float)(numberDown - numberUp) * 0.5f * dominoeScale * (Constants.dominoHeight + interval);
-        foreach (DominoController domino in horizontalDominoes)
+        //generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.5f * dominoeScale * (Constants.dominoHeight + interval);
+        //generalVerticalOffset = (float)(numberDown - numberUp) * 0.5f * dominoeScale * (Constants.dominoHeight + interval);
+        for (int i = 0; i < horizontalDominoes.Count; i++)
         {
-            SetPlayedDominoPosition(domino);
+            SetPlayedDominoPosition(horizontalDominoes[i], horizontalPositions[i], horizontalRotations[i]);
+            if (leftMost != Vector3.zero && horizontalPositions[i].x < leftMost.x)
+            {
+                SetRotateDomino(horizontalDominoes[i], new Vector3(leftMost.x - 0.5f * dominoScale * Constants.dominoWidth, leftMost.y));
+            }
+            if (rightMost != Vector3.zero && horizontalPositions[i].x > rightMost.x)
+            {
+                SetRotateDomino(horizontalDominoes[i], new Vector3(rightMost.x + 0.5f * dominoScale * Constants.dominoWidth, rightMost.y));
+            }
         }
-        foreach (DominoController domino in verticalDominoes)
+        for (int i = 0; i < verticalDominoes.Count; i++)
         {
-            SetPlayedDominoPosition(domino);
+            SetPlayedDominoPosition(verticalDominoes[i], verticalPositions[i], verticalRotations[i]);
+            if (upMost != Vector3.zero && verticalPositions[i].y > upMost.y)
+            {
+                SetRotateDomino(verticalDominoes[i], new Vector3(upMost.x, upMost.y + 0.5f * dominoScale * Constants.dominoWidth));
+            }
+            if (downMost != Vector3.zero && verticalPositions[i].y < downMost.y)
+            {
+                SetRotateDomino(verticalDominoes[i], new Vector3(downMost.x, downMost.y - 0.5f * dominoScale * Constants.dominoWidth));
+            }
         }
+
+//        foreach (DominoController domino in horizontalDominoes)
+//        {
+//            SetPlayedDominoPosition(domino);
+//        }
+//        foreach (DominoController domino in verticalDominoes)
+//        {
+//            SetPlayedDominoPosition(domino);
+//        }
     }
 
     public void ResetHand()
@@ -293,11 +365,19 @@ public class HistoryController : MonoBehaviour
         verticalDominoes.Clear();
         isSpinnerPlaced = false;
         putPosition = PutPosition.NA;
-        generalHorizontalOffset = 0;
-        generalVerticalOffset = 0;
-        numberLeft = 0;
-        numberRight = 0;
-        numberUp = 0;
-        numberDown = 0;
+        //generalHorizontalOffset = 0;
+        //generalVerticalOffset = 0;
+//        numberLeft = 0;
+//        numberRight = 0;
+//        numberUp = 0;
+//        numberDown = 0;
+        horizontalPositions.Clear();
+        verticalPositions.Clear();
+        horizontalRotations.Clear();
+        verticalRotations.Clear();
+        leftMost = Vector3.zero;
+        rightMost = Vector3.zero;
+        upMost = Vector3.zero;
+        downMost = Vector3.zero;
     }
 }
