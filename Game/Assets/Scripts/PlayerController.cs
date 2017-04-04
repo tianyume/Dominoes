@@ -297,123 +297,131 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            int horizontalLen = historyController.horizontalDominoes.Count;
-            int verticalLen = historyController.verticalDominoes.Count;
-            //there is no cards on play zone(the first card to play)
-            if (horizontalLen == 0 && verticalLen == 0)
+            foreach (DominoController playingDomino in dominoControllers)
             {
-                return true;
+                if (ListOfValidPlaces(playingDomino) != null)
+                    return true;
             }
-            else
+
+        }
+        return false;     
+    }
+
+    public List<DominoController> ListOfValidPlaces(DominoController playingDomino)
+    {
+        int horizontalLen = historyController.horizontalDominoes.Count;
+        int verticalLen = historyController.verticalDominoes.Count;
+        List<DominoController> listOfValidPlaces = new List<DominoController>();
+        //there is no cards on play zone(the first card to play)
+        if (horizontalLen == 0 && verticalLen == 0)
+        {
+            return null;
+        }
+        else
+        {
+            List<DominoController> fourCorners = new List<DominoController>();
+            if (horizontalLen != 0)
             {
-                List<DominoController> validPlaces = new List<DominoController>();
-                if (horizontalLen != 0)
+                fourCorners.Add(historyController.horizontalDominoes[0]);
+                fourCorners.Add(historyController.horizontalDominoes[horizontalLen-1]);
+            }
+            if (verticalLen != 0)
+            {
+                fourCorners.Add(historyController.verticalDominoes[0]);
+                fourCorners.Add(historyController.verticalDominoes[verticalLen-1]);
+            }
+            if (fourCorners.Count != 0)
+            {
+                foreach (DominoController toplaceDomino in fourCorners)
                 {
-                    validPlaces.Add(historyController.horizontalDominoes[0]);
-                    validPlaces.Add(historyController.horizontalDominoes[horizontalLen-1]);
-                }
-                if (verticalLen != 0)
-                {
-                    validPlaces.Add(historyController.verticalDominoes[0]);
-                    validPlaces.Add(historyController.verticalDominoes[verticalLen-1]);
-                }
-                foreach (DominoController playingDomino in dominoControllers)
-                {
-                    if (validPlaces.Count != 0)
+                    if (horizontalLen != 0)
                     {
-                        foreach (DominoController toplaceDomino in validPlaces)
+                        if (toplaceDomino == historyController.horizontalDominoes[0])
                         {
-                            if (horizontalLen != 0)
+                            //vertical toplaceDomino
+                            if (toplaceDomino.leftValue == -1)
                             {
-                                if (toplaceDomino == historyController.horizontalDominoes[0])
+                                if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
                                 {
-                                    //vertical toplaceDomino
-                                    if (toplaceDomino.leftValue == -1)
-                                    {
-                                        if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
-                                        {
-                                            return true;
-                                        }
-                                    }
-                                    //horizontal toplaceDomino
-                                    else
-                                    {
-                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
-                                        {
-
-                                            return true;
-                                        }
-
-                                    }
-                                }
-                                if (toplaceDomino == historyController.horizontalDominoes[horizontalLen-1])
-                                {
-                                    //vertival topalceDomino
-                                    if (toplaceDomino.leftValue == -1)
-                                    {
-                                        if (toplaceDomino.upperValue == playingDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
-                                        {
-                                            return true;
-                                        }
-                                    }
-                                    //horizontal topalceDomino
-                                    else
-                                    {
-                                        if (playingDomino.upperValue == toplaceDomino.rightValue || playingDomino.lowerValue == toplaceDomino.rightValue)
-                                        {
-                                            return true;
-                                        }
-
-                                    }
-                                } 
-                            }
-
-                            if (verticalLen != 0)
-                            {
-                                if (toplaceDomino == historyController.verticalDominoes[0])
-                                {
-                                    //vertical topalceDomino
-                                    if (toplaceDomino.leftValue == -1)
-                                    {
-
-                                        if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
-                                        {
-                                            return true;
-                                        }
-                                    }
-                                    //horizontal toplaceDomino
-                                    else
-                                    {
-                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
-                                        {
-                                            return true;
-                                        }
-                                    }
-                                }
-                                if (toplaceDomino == historyController.verticalDominoes[verticalLen-1])
-                                {
-                                    //vertical toplaceDomino
-                                    if (toplaceDomino.leftValue == -1)
-                                    {
-                                        if(playingDomino.upperValue == toplaceDomino.lowerValue || playingDomino.lowerValue == toplaceDomino.lowerValue)
-                                        {
-
-                                            return true;
-                                        }
-
-                                    }
-                                    //horizontal toplaceDomino
-                                    else
-                                    {
-                                        if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
-                                        {
-
-                                            return true;
-                                        }
-                                    }
+                                    listOfValidPlaces.Add(toplaceDomino);
                                 }
                             }
+                            //horizontal toplaceDomino
+                            else
+                            {
+                                if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                {
 
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+
+                            }
+                        }
+                        if (toplaceDomino == historyController.horizontalDominoes[horizontalLen-1])
+                        {
+                            //vertival topalceDomino
+                            if (toplaceDomino.leftValue == -1)
+                            {
+                                if (toplaceDomino.upperValue == playingDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
+                                {
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+                            }
+                            //horizontal topalceDomino
+                            else
+                            {
+                                if (playingDomino.upperValue == toplaceDomino.rightValue || playingDomino.lowerValue == toplaceDomino.rightValue)
+                                {
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+
+                            }
+                        } 
+                    }
+
+                    if (verticalLen != 0)
+                    {
+                        if (toplaceDomino == historyController.verticalDominoes[0])
+                        {
+                            //vertical topalceDomino
+                            if (toplaceDomino.leftValue == -1)
+                            {
+
+                                if (playingDomino.upperValue == toplaceDomino.upperValue || playingDomino.lowerValue == toplaceDomino.upperValue)
+                                {
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+                            }
+                            //horizontal toplaceDomino
+                            else
+                            {
+                                if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                {
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+                            }
+                        }
+                        if (toplaceDomino == historyController.verticalDominoes[verticalLen-1])
+                        {
+                            //vertical toplaceDomino
+                            if (toplaceDomino.leftValue == -1)
+                            {
+                                if(playingDomino.upperValue == toplaceDomino.lowerValue || playingDomino.lowerValue == toplaceDomino.lowerValue)
+                                {
+
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+
+                            }
+                            //horizontal toplaceDomino
+                            else
+                            {
+                                if (playingDomino.upperValue == toplaceDomino.leftValue || playingDomino.lowerValue == toplaceDomino.leftValue)
+                                {
+
+                                    listOfValidPlaces.Add(toplaceDomino);
+                                }
+                            }
                         }
                     }
 
@@ -421,9 +429,10 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-       
-        return false;     
-        
+        if (listOfValidPlaces.Count != 0)
+            return listOfValidPlaces;
+        else
+            return null;
     }
 
 
