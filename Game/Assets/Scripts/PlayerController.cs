@@ -771,7 +771,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    return;
+                    gameController.PlayerIsBlocked(this);
                 }
             }
         }
