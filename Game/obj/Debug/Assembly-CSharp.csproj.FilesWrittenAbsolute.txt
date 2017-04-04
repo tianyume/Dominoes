@@ -40,3 +40,24 @@
 /Users/zhangcongying/Desktop/Game/Game/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/zhangcongying/Desktop/Game/Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/zhangcongying/Desktop/Game/Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/obj/Debug/Assembly-CSharp.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEditor.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.Analytics.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/UnityEngine.VR.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.DataContract.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll

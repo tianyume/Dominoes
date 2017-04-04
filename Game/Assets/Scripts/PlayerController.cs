@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public int startPosition2 = 8;
     public string playerName;
     private int cnt;
+    float dominoScale = 1.2f;
     private bool isFirstDeal = true;
 
 
@@ -435,6 +436,197 @@ public class PlayerController : MonoBehaviour
             return null;
     }
 
+    public void PlaceDomino(DominoController AIchosenDomino, DominoController AIchosenplace)
+    {
+        DominoController clickedDomino = AIchosenplace;
+        int horizontalLen = historyController.horizontalDominoes.Count;
+        int verticalLen = historyController.verticalDominoes.Count;
+
+        if (AIchosenDomino != null)
+        {
+            if (clickedDomino != null)
+            {
+                if (clickedDomino == historyController.horizontalDominoes[0])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.upperValue || AIchosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.upperValue)
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            else
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_left,h_vertical,p_normal");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.leftValue && AIchosenDomino.upperValue == AIchosenDomino.lowerValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_left,h_horizontal,p_special");
+                            return;
+                        }
+                        else if (AIchosenDomino.upperValue == clickedDomino.leftValue || AIchosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.leftValue)
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            else
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_left,h_horizontal,p_normal");
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.horizontalDominoes[horizontalLen - 1])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.upperValue || AIchosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.upperValue)
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            else
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_right,h_vertical,p_normal");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.rightValue && AIchosenDomino.upperValue == AIchosenDomino.lowerValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_right,h_horizontal,p_special");
+                            return;
+                        }
+                        else if (AIchosenDomino.upperValue == clickedDomino.rightValue || AIchosenDomino.lowerValue == clickedDomino.rightValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.rightValue)
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            else
+                                AIchosenDomino.SetLeftRightValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_right,h_horizontal,p_normal");
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.verticalDominoes[0])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.upperValue && AIchosenDomino.upperValue == AIchosenDomino.lowerValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_top,h_vertical,p_special");
+                            return;
+                        }
+                        else if (AIchosenDomino.upperValue == clickedDomino.upperValue || AIchosenDomino.lowerValue == clickedDomino.upperValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.upperValue)
+                                AIchosenDomino.SetUpperLowerValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_top,h_vertical,p_normal");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.leftValue || AIchosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.upperValue == clickedDomino.leftValue)
+                                AIchosenDomino.SetUpperLowerValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_top,h_horizontal,p_normal");
+                            return;
+                        }
+                    }
+                }
+                if (clickedDomino == historyController.verticalDominoes[verticalLen - 1])
+                {
+                    if (clickedDomino.leftValue == -1)
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.lowerValue && AIchosenDomino.upperValue == AIchosenDomino.lowerValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_bottom,h_vertical,p_special");
+                            return;
+                        }
+                        else if (AIchosenDomino.upperValue == clickedDomino.lowerValue || AIchosenDomino.lowerValue == clickedDomino.lowerValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.lowerValue == clickedDomino.lowerValue)
+                                AIchosenDomino.SetUpperLowerValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_bottom,h_vertical,p_normal");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (AIchosenDomino.upperValue == clickedDomino.leftValue || AIchosenDomino.lowerValue == clickedDomino.leftValue)
+                        {
+                            AIchosenplace = clickedDomino;
+                            if (AIchosenDomino.lowerValue == clickedDomino.leftValue)
+                                AIchosenDomino.SetUpperLowerValues(AIchosenDomino.lowerValue, AIchosenDomino.upperValue);
+                            //                            PlayDomino();
+                            //                            AIchosenDomino = null;
+                            //                            AIchosenplace = null;
+                            //                            Debug.Log("excute h_bottom,h_horizontal,p_normal");
+                            return;
+                        }
+                    }
+                }
+
+
+            }
+            else
+            {
+                if (AIchosenDomino.upperValue != AIchosenDomino.lowerValue)
+                    AIchosenDomino.SetLeftRightValues(AIchosenDomino.upperValue, AIchosenDomino.lowerValue);
+            }
+        }
+    }
+
 
     public void Selecteffect(DominoController selected)
     {
@@ -490,6 +682,7 @@ public class PlayerController : MonoBehaviour
             {
                 // TOFIX
                 domino.transform.position = new Vector3(cnt++, startPosition1, 0);
+                domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
             }
         }
@@ -500,6 +693,7 @@ public class PlayerController : MonoBehaviour
             {
                 // TOFIX
                 domino.transform.position = new Vector3(cnt++, startPosition2, 0);
+                domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
             }
         }
