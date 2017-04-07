@@ -149,15 +149,42 @@ public class GameController : MonoBehaviour
             }
         }
 
-        // Else continue
-        if (player == player1)
+//        // Else continue
+//        if (player == player1)
+//        {
+//            player2.PlayDomino();
+//        }
+//        else
+//        {
+//            player1.PlayDomino();
+//        }
+
+        if (player.playerName == player1.playerName)
         {
-            player2.PlayDomino();
+            if (player2.HasCardToPlay())
+            {
+                player2.PlayDomino();
+            }
+            else
+            {
+                player2.DrawDomino();
+                player2.PlayDomino();
+            }
+
         }
         else
         {
-            player1.PlayDomino();
+            if (player1.HasCardToPlay())
+            {
+                player1.PlayDomino();
+            }
+            else
+            {
+                player1.DrawDomino();
+                player1.PlayDomino();
+            }
         }
+
     }
 
     void ScoreByCurrentPlay(PlayerController player)
