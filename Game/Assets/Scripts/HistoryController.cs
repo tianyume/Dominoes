@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HistoryController : MonoBehaviour
 {
-    float interval = 0.2f;
-    float dominoScale = 1.5f;
+    float interval = 0.08f;
+    float dominoScale = 1.2f;
     float startPositionX = 0.0f;
     float startPositionY = 0.0f;
     public DominoController spinner;
@@ -18,7 +18,7 @@ public class HistoryController : MonoBehaviour
     float generalHorizontalOffset = 0.0f;
     float generalVerticalOffset = 0.0f;
     float upperBound = 3f, lowerBound = -3f;
-    float leftBound = -9f, rightBound = 13f;
+    float leftBound = -9f, rightBound = 15f;
     Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
     Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
 
@@ -147,7 +147,7 @@ public class HistoryController : MonoBehaviour
 
     void setGeneralOffset()
     {
-        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.8f * dominoScale * (Constants.dominoHeight + interval) + 1.5f;
+        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.6f * dominoScale * (Constants.dominoHeight + interval) + 1.2f;
         //generalVerticalOffset = (float)(numberDown - numberUp) * 0.3f * dominoScale * (Constants.dominoHeight + interval);
     }
 
