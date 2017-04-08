@@ -136,6 +136,11 @@ public class GameController : MonoBehaviour
             {
                 ScoreByEndingHand(player1, player2DominoSum - player1DominoSum);
             }
+            if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
+            {
+                ShowPlayerWin();
+                return;
+            }
             // Reset a hand
             ResetHand();
             // Start a hand
@@ -343,7 +348,7 @@ public class GameController : MonoBehaviour
 
     void ShowPlayerWin()
     {
-        if (scoreOfPlayer1 >= maxScore)
+        if (scoreOfPlayer1 >= scoreOfPlayer2)
         {
             winText.text = "Player1 Wins!";
         }
