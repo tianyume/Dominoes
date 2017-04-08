@@ -406,6 +406,16 @@ public class AIController : PlayerController {
 
     public new void PlayDomino()
     {
+
+        if (!HasCardToPlay())
+        {
+            //not first deal
+            if (historyController.horizontalDominoes.Count != 0 || historyController.verticalDominoes.Count != 0)
+            {
+                DrawDomino();
+            }
+
+        }
         AIPlayDomino();
         dominoControllers.Remove(AIchosenDomino);
         AddDomino();
@@ -415,10 +425,6 @@ public class AIController : PlayerController {
         AIchosenDomino = null;
         AIchosenplace = null;
         gameController.PlayerPlayDomino(this, tcd, tcp);
-
-
-
     }
-
 
 }

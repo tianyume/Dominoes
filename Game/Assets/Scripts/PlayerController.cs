@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     float dominoScale = 1.2f;
     private bool isFirstDeal = true;
 
+    bool drawFlag=false;
 
 	void Start()
     {
@@ -704,34 +705,42 @@ public class PlayerController : MonoBehaviour
     // For Game
     public void PlayDomino()
     {
-        //ToFix
+        if (!HasCardToPlay())
+        {
+            //not first deal
+            if (historyController.verticalDominoes.Count != 0 || historyController.horizontalDominoes.Count != 0)
+            {
+                DrawDomino();
+            }
+
+        }
         if (chosenDomino != null && readytoplay == true)
         {
             dominoControllers.Remove(chosenDomino);
             AddDomino();
             if (playerName == "player1")
             {
-                DominoController tcd,tcp;
+                DominoController tcd, tcp;
                 tcd = chosenDomino;
                 tcp = chosenPlace;
                 chosenDomino = null;
                 chosenPlace = null;
                 gameController.PlayerPlayDomino(this, tcd, tcp);
-//                AddDomino();
+                //                AddDomino();
 
             }
             else if (playerName == "player2")
             {
-                DominoController tcd,tcp;
+                DominoController tcd, tcp;
                 tcd = chosenDomino;
                 tcp = chosenPlace;
                 chosenDomino = null;
                 chosenPlace = null;
                 gameController.PlayerPlayDomino(this, tcd, tcp);
-//                AddDomino();
+                //                AddDomino();
             }
-        }
-                     
+        }   
+                 
     }
        
     public void registerDomino()
@@ -752,6 +761,7 @@ public class PlayerController : MonoBehaviour
 
     public void DrawDomino()
     {
+        
         if (HasCardToPlay())
         {
             return;

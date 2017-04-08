@@ -82,29 +82,13 @@ public class GameController : MonoBehaviour
         if (player.playerName == player1.playerName)
         {
             UpdateTurnText(player2);
-            if (player2.HasCardToPlay())
-            {
-                player2.PlayDomino();
-            }
-            else
-            {
-                player2.DrawDomino();
-                player2.PlayDomino();
-            }
+            player2.PlayDomino();
 
         }
         else
         {
             UpdateTurnText(player1);
-            if (player1.HasCardToPlay())
-            {
-                player1.PlayDomino();
-            }
-            else
-            {
-                player1.DrawDomino();
-                player1.PlayDomino();
-            }
+            player1.PlayDomino();
         }
     }
 
@@ -154,41 +138,17 @@ public class GameController : MonoBehaviour
             }
         }
 
-//        // Else continue
-//        if (player == player1)
-//        {
-//            player2.PlayDomino();
-//        }
-//        else
-//        {
-//            player1.PlayDomino();
-//        }
-
-        if (player.playerName == player1.playerName)
+        // Else continue
+        if (player == player1)
         {
-            if (player2.HasCardToPlay())
-            {
-                player2.PlayDomino();
-            }
-            else
-            {
-                player2.DrawDomino();
-                player2.PlayDomino();
-            }
-
+            player2.PlayDomino();
         }
         else
         {
-            if (player1.HasCardToPlay())
-            {
-                player1.PlayDomino();
-            }
-            else
-            {
-                player1.DrawDomino();
-                player1.PlayDomino();
-            }
+            player1.PlayDomino();
         }
+
+
 
     }
 
