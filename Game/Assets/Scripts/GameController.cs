@@ -127,10 +127,12 @@ public class GameController : MonoBehaviour
             }
             // Reset a hand
             ResetHand();
+            Debug.Log("Block both");
             // Start a hand
             if (player1DominoSum > player2DominoSum)
             {
                 StartHand(player2);
+
             }
             else
             {

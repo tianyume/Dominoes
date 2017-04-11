@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
                 readytoplay = true;
                 if (chosenDomino.upperValue != chosenDomino.lowerValue)
                     chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                PlayDomino();
+                PlayerPlayDomino();
                 chosenDomino = null;
             }
             else if(readytoplay)
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_left,h_vertical,p_normal");
                             return;
                         }
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
                         if (chosenDomino.upperValue == clickedDomino.leftValue && chosenDomino.upperValue == chosenDomino.lowerValue)
                         {
                             chosenPlace = clickedDomino;
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_left,h_horizontal,p_special");
                             return;
                         }
@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_left,h_horizontal,p_normal");
                             return;
                         }
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_right,h_vertical,p_normal");
                             return;
                         }
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
                         if (chosenDomino.upperValue == clickedDomino.rightValue && chosenDomino.upperValue == chosenDomino.lowerValue)
                         {
                             chosenPlace = clickedDomino;
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_right,h_horizontal,p_special");
                             return;
                         }
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
                                 chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
                             else
                                 chosenDomino.SetLeftRightValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_right,h_horizontal,p_normal");
                             return;
                         }
@@ -222,7 +222,7 @@ public class PlayerController : MonoBehaviour
                         {
                             chosenPlace = clickedDomino;
                             chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_top,h_vertical,p_special");
                             return;
                         }
@@ -231,7 +231,7 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             if (chosenDomino.upperValue == clickedDomino.upperValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_top,h_vertical,p_normal");
                             return;
                         }
@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             if (chosenDomino.upperValue == clickedDomino.leftValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_top,h_horizontal,p_normal");
                             return;
                         }
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
                         {
                             chosenPlace = clickedDomino;
                             chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_bottom,h_vertical,p_special");
                             return;
                         }
@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             if (chosenDomino.lowerValue == clickedDomino.lowerValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_bottom,h_vertical,p_normal");
                             return;
                         }
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
                             chosenPlace = clickedDomino;
                             if (chosenDomino.lowerValue == clickedDomino.leftValue)
                                 chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayDomino();
+                            PlayerPlayDomino();
                             Debug.Log("excute h_bottom,h_horizontal,p_normal");
                             return;
                         }
@@ -714,6 +714,17 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        else
+        {
+            PlayerPlayDomino();
+        }
+
+                 
+    }
+
+    //for player
+    public void PlayerPlayDomino()
+    {
         if (chosenDomino != null && readytoplay == true)
         {
             dominoControllers.Remove(chosenDomino);
@@ -740,7 +751,6 @@ public class PlayerController : MonoBehaviour
                 //                AddDomino();
             }
         }   
-                 
     }
        
     public void registerDomino()
