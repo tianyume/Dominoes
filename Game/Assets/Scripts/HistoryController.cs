@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class HistoryController : MonoBehaviour
 {
-    float interval = 0.08f;
-    float dominoScale = 1.2f;
-    float startPositionX = 0.0f;
-    float startPositionY = 0.0f;
+    public float interval = 0.08f;
+    public float dominoScale = 1.2f;
+    public float startPositionX = 0.0f;
+    public float startPositionY = 0.0f;
     public DominoController spinner;
     public List<DominoController> horizontalDominoes;
     public List<DominoController> verticalDominoes;
-    bool isSpinnerPlaced;
-    DominoController center;
-    PutPosition putPosition;
-    int numberLeft, numberRight, numberUp, numberDown;
-    float generalHorizontalOffset = 0.0f;
-    float generalVerticalOffset = 0.0f;
-    float upperBound = 3f, lowerBound = -3f;
-    float leftBound = -9f, rightBound = 15f;
-    Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
-    Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
+    public bool isSpinnerPlaced;
+    public DominoController center;
+    public PutPosition putPosition;
+    public int numberLeft, numberRight, numberUp, numberDown;
+    public float generalHorizontalOffset = 0.0f;
+    public float generalVerticalOffset = 0.0f;
+    public float upperBound = 3f, lowerBound = -3f;
+    public float leftBound = -9f, rightBound = 15f;
+    public Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
+    public Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
 
     // store origin position and rotations
-    List<Vector3> horizontalPositions;
-    List<Vector3> verticalPositions;
-    List<Quaternion> horizontalRotations;
-    List<Quaternion> verticalRotations;
+    public List<Vector3> horizontalPositions;
+    public List<Vector3> verticalPositions;
+    public List<Quaternion> horizontalRotations;
+    public List<Quaternion> verticalRotations;
 
-    enum PutPosition
+    public enum PutPosition
     {
         Left,
         Right,

@@ -74,14 +74,15 @@ public class DominoController : MonoBehaviour
     public float offsetHorizontal;
     public float offsetVertical;
 
-    float beforeClickPositionX = 0;
-    float beforeClickPositionY = 0;
+    public float beforeClickPositionX = 0;
+    public float beforeClickPositionY = 0;
 
     public bool isClicked = false;
 
     public delegate void OnClickDelegate(DominoController dominoController);
     public OnClickDelegate onClick;
-    private int spriteIndex;
+    public int spriteIndex;
+
     private void Update()
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);

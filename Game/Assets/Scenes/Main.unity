@@ -267,11 +267,59 @@ MonoBehaviour:
   gameController: {fileID: 1448602197}
   dominoControllers: []
   tileController: {fileID: 486113554}
-  historyController: {fileID: 1232068275}
+  history: {fileID: 0}
   turnText: {fileID: 896247810}
   startPosition1: -8
   startPosition2: 8
   playerName: player2
+--- !u!1 &578630832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 578630834}
+  - component: {fileID: 578630833}
+  m_Layer: 0
+  m_Name: GreedyAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &578630833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 578630832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba2cfc15f087472f8c2a4a13f3c10cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 1448602197}
+  dominoControllers: []
+  tileController: {fileID: 486113554}
+  history: {fileID: 1232068275}
+  turnText: {fileID: 896247810}
+  startPosition1: -8
+  startPosition2: 8
+  playerName: player2
+--- !u!4 &578630834
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 578630832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &583758706
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &583758707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,7 +350,7 @@ MonoBehaviour:
   gameController: {fileID: 1448602197}
   dominoControllers: []
   tileController: {fileID: 486113554}
-  historyController: {fileID: 1232068275}
+  history: {fileID: 1232068275}
   turnText: {fileID: 896247810}
   startPosition1: -8
   startPosition2: 8
@@ -437,7 +485,7 @@ MonoBehaviour:
   gameController: {fileID: 1448602197}
   dominoControllers: []
   tileController: {fileID: 486113554}
-  historyController: {fileID: 1232068275}
+  history: {fileID: 1232068275}
   turnText: {fileID: 896247810}
   startPosition1: -8
   startPosition2: 8
@@ -620,6 +668,10 @@ MonoBehaviour:
   spinner: {fileID: 0}
   horizontalDominoes: []
   verticalDominoes: []
+  horizontalPositions: []
+  verticalPositions: []
+  horizontalRotations: []
+  verticalRotations: []
 --- !u!4 &1232068276
 Transform:
   m_ObjectHideFlags: 0
@@ -663,7 +715,7 @@ MonoBehaviour:
   tile: {fileID: 486113554}
   history: {fileID: 1232068275}
   player1: {fileID: 861709676}
-  player2: {fileID: 583758707}
+  player2: {fileID: 578630833}
   scoreText1: {fileID: 2071889429}
   scoreText2: {fileID: 924087138}
   winText: {fileID: 833191532}

@@ -61,3 +61,26 @@
 /Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/guanhonglong/Documents/Unity Workspace/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/mty/Documents/Projects/Dominoes/Game/obj/Debug/Assembly-CSharp.dll
+/Users/mty/Documents/Projects/Dominoes/Game/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEditor.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.Analytics.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/UnityEngine.VR.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Mono.Data.Sqlite.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/System.Data.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Unity.DataContract.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/mty/Documents/Projects/Dominoes/Game/Temp/bin/Debug/Assembly-CSharp.dll

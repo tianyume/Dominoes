@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public TileController tile;
     public HistoryController history;
     public PlayerController player1;
-    public AIController player2;
+    public PlayerController player2;
     public Text scoreText1;
     public Text scoreText2;
     public Text winText;

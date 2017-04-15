@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public HistoryController historyController;
+    public HistoryController history;
     private DominoController chosenDomino;
     private DominoController chosenPlace;
     private bool readytoplay = false;
@@ -125,8 +125,8 @@ public class PlayerController : MonoBehaviour
 
         if (chosenDomino != null)
         {
-            int horizontalLen = historyController.horizontalDominoes.Count;
-            int verticalLen = historyController.verticalDominoes.Count;
+            int horizontalLen = history.horizontalDominoes.Count;
+            int verticalLen = history.verticalDominoes.Count;
             if (horizontalLen == 0 && verticalLen == 0)
             {
                 chosenPlace = null;
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
             }
             else if(readytoplay)
             {
-                if (clickedDomino == historyController.horizontalDominoes[0])
+                if (clickedDomino == history.horizontalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.horizontalDominoes[horizontalLen-1])
+                if (clickedDomino == history.horizontalDominoes[horizontalLen-1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -214,7 +214,8 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[0])
+                // TOFIX System.ArgumentOutOfRangeException
+                if (clickedDomino == history.verticalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -249,7 +250,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[verticalLen-1])
+                if (clickedDomino == history.verticalDominoes[verticalLen-1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -311,8 +312,8 @@ public class PlayerController : MonoBehaviour
 
     public List<DominoController> ListOfValidPlaces(DominoController playingDomino)
     {
-        int horizontalLen = historyController.horizontalDominoes.Count;
-        int verticalLen = historyController.verticalDominoes.Count;
+        int horizontalLen = history.horizontalDominoes.Count;
+        int verticalLen = history.verticalDominoes.Count;
         List<DominoController> listOfValidPlaces = new List<DominoController>();
         //there is no cards on play zone(the first card to play)
         if (horizontalLen == 0 && verticalLen == 0)
@@ -324,13 +325,13 @@ public class PlayerController : MonoBehaviour
             List<DominoController> fourCorners = new List<DominoController>();
             if (horizontalLen != 0)
             {
-                fourCorners.Add(historyController.horizontalDominoes[0]);
-                fourCorners.Add(historyController.horizontalDominoes[horizontalLen-1]);
+                fourCorners.Add(history.horizontalDominoes[0]);
+                fourCorners.Add(history.horizontalDominoes[horizontalLen-1]);
             }
             if (verticalLen != 0)
             {
-                fourCorners.Add(historyController.verticalDominoes[0]);
-                fourCorners.Add(historyController.verticalDominoes[verticalLen-1]);
+                fourCorners.Add(history.verticalDominoes[0]);
+                fourCorners.Add(history.verticalDominoes[verticalLen-1]);
             }
             if (fourCorners.Count != 0)
             {
@@ -338,7 +339,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (horizontalLen != 0)
                     {
-                        if (toplaceDomino == historyController.horizontalDominoes[0])
+                        if (toplaceDomino == history.horizontalDominoes[0])
                         {
                             //vertical toplaceDomino
                             if (toplaceDomino.leftValue == -1)
@@ -359,7 +360,7 @@ public class PlayerController : MonoBehaviour
 
                             }
                         }
-                        if (toplaceDomino == historyController.horizontalDominoes[horizontalLen-1])
+                        if (toplaceDomino == history.horizontalDominoes[horizontalLen-1])
                         {
                             //vertival topalceDomino
                             if (toplaceDomino.leftValue == -1)
@@ -383,7 +384,7 @@ public class PlayerController : MonoBehaviour
 
                     if (verticalLen != 0)
                     {
-                        if (toplaceDomino == historyController.verticalDominoes[0])
+                        if (toplaceDomino == history.verticalDominoes[0])
                         {
                             //vertical topalceDomino
                             if (toplaceDomino.leftValue == -1)
@@ -403,7 +404,7 @@ public class PlayerController : MonoBehaviour
                                 }
                             }
                         }
-                        if (toplaceDomino == historyController.verticalDominoes[verticalLen-1])
+                        if (toplaceDomino == history.verticalDominoes[verticalLen-1])
                         {
                             //vertical toplaceDomino
                             if (toplaceDomino.leftValue == -1)
@@ -440,14 +441,14 @@ public class PlayerController : MonoBehaviour
     public void PlaceDomino(DominoController AIchosenDomino, DominoController AIchosenplace)
     {
         DominoController clickedDomino = AIchosenplace;
-        int horizontalLen = historyController.horizontalDominoes.Count;
-        int verticalLen = historyController.verticalDominoes.Count;
+        int horizontalLen = history.horizontalDominoes.Count;
+        int verticalLen = history.verticalDominoes.Count;
 
         if (AIchosenDomino != null)
         {
             if (clickedDomino != null)
             {
-                if (clickedDomino == historyController.horizontalDominoes[0])
+                if (clickedDomino == history.horizontalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -491,7 +492,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.horizontalDominoes[horizontalLen - 1])
+                if (clickedDomino == history.horizontalDominoes[horizontalLen - 1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -535,7 +536,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[0])
+                if (verticalLen > 0 && clickedDomino == history.verticalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -576,7 +577,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[verticalLen - 1])
+                if (verticalLen > 0 && clickedDomino == history.verticalDominoes[verticalLen - 1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -703,12 +704,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // For Game
-    public void PlayDomino()
+    public virtual void PlayDomino()
     {
         if (!HasCardToPlay())
         {
             //not first deal
-            if (historyController.verticalDominoes.Count != 0 || historyController.horizontalDominoes.Count != 0)
+            if (history.verticalDominoes.Count != 0 || history.horizontalDominoes.Count != 0)
             {
                 DrawDomino();
             }
@@ -755,17 +756,17 @@ public class PlayerController : MonoBehaviour
        
     public void registerDomino()
     {
-        int horizontalLen = historyController.horizontalDominoes.Count;
-        int verticalLen = historyController.verticalDominoes.Count;
+        int horizontalLen = history.horizontalDominoes.Count;
+        int verticalLen = history.verticalDominoes.Count;
         if (horizontalLen != 0)
         {
-            historyController.horizontalDominoes[0].onClick = DominoOnClick;
-            historyController.horizontalDominoes[horizontalLen-1].onClick = DominoOnClick;
+            history.horizontalDominoes[0].onClick = DominoOnClick;
+            history.horizontalDominoes[horizontalLen-1].onClick = DominoOnClick;
         }
         if (verticalLen != 0)
         {
-            historyController.verticalDominoes[0].onClick = DominoOnClick;
-            historyController.verticalDominoes[verticalLen-1].onClick = DominoOnClick;
+            history.verticalDominoes[0].onClick = DominoOnClick;
+            history.verticalDominoes[verticalLen-1].onClick = DominoOnClick;
         }
     }
 

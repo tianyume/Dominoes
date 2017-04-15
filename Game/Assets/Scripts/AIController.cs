@@ -47,8 +47,8 @@ public class AIController : PlayerController {
     public void AIPlay()
     {
 
-            int horizontalLen = historyController.horizontalDominoes.Count;
-            int verticalLen = historyController.verticalDominoes.Count;
+            int horizontalLen = history.horizontalDominoes.Count;
+            int verticalLen = history.verticalDominoes.Count;
             //there is no cards on play zone(the first card to play)
             if (horizontalLen == 0 && verticalLen == 0)
             {
@@ -61,13 +61,13 @@ public class AIController : PlayerController {
                 List<DominoController> validPlaces = new List<DominoController>();
                 if (horizontalLen != 0)
                 {
-                    validPlaces.Add(historyController.horizontalDominoes[0]);
-                    validPlaces.Add(historyController.horizontalDominoes[horizontalLen-1]);
+                    validPlaces.Add(history.horizontalDominoes[0]);
+                    validPlaces.Add(history.horizontalDominoes[horizontalLen-1]);
                 }
                 if (verticalLen != 0)
                 {
-                    validPlaces.Add(historyController.verticalDominoes[0]);
-                    validPlaces.Add(historyController.verticalDominoes[verticalLen-1]);
+                    validPlaces.Add(history.verticalDominoes[0]);
+                    validPlaces.Add(history.verticalDominoes[verticalLen-1]);
                 }
                 foreach (DominoController playingDomino in dominoControllers)
                 {
@@ -77,7 +77,7 @@ public class AIController : PlayerController {
                         {
                             if (horizontalLen != 0)
                             {
-                                if (toplaceDomino == historyController.horizontalDominoes[0])
+                                if (toplaceDomino == history.horizontalDominoes[0])
                                 {
                                     //vertical toplaceDomino
                                     if (toplaceDomino.leftValue == -1)
@@ -103,7 +103,7 @@ public class AIController : PlayerController {
 
                                     }
                                 }
-                                if (toplaceDomino == historyController.horizontalDominoes[horizontalLen-1])
+                                if (toplaceDomino == history.horizontalDominoes[horizontalLen-1])
                                 {
                                     //vertival topalceDomino
                                     if (toplaceDomino.leftValue == -1)
@@ -131,7 +131,7 @@ public class AIController : PlayerController {
 
                             if (verticalLen != 0)
                             {
-                                if (toplaceDomino == historyController.verticalDominoes[0])
+                                if (toplaceDomino == history.verticalDominoes[0])
                                 {
                                     //vertical topalceDomino
                                     if (toplaceDomino.leftValue == -1)
@@ -155,7 +155,7 @@ public class AIController : PlayerController {
                                         }
                                     }
                                 }
-                                if (toplaceDomino == historyController.verticalDominoes[verticalLen-1])
+                                if (toplaceDomino == history.verticalDominoes[verticalLen-1])
                                 {
                                     //vertical toplaceDomino
                                     if (toplaceDomino.leftValue == -1)
@@ -196,14 +196,14 @@ public class AIController : PlayerController {
     public void AIPlaceDomino()
     {
         DominoController clickedDomino = AIchosenplace;
-        int horizontalLen = historyController.horizontalDominoes.Count;
-        int verticalLen = historyController.verticalDominoes.Count;
+        int horizontalLen = history.horizontalDominoes.Count;
+        int verticalLen = history.verticalDominoes.Count;
 
         if (AIchosenDomino != null)
         {
             if (clickedDomino != null)
             {
-                if (clickedDomino == historyController.horizontalDominoes[0])
+                if (clickedDomino == history.horizontalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -247,7 +247,7 @@ public class AIController : PlayerController {
                         }
                     }
                 }
-                if (clickedDomino == historyController.horizontalDominoes[horizontalLen - 1])
+                if (clickedDomino == history.horizontalDominoes[horizontalLen - 1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -291,7 +291,7 @@ public class AIController : PlayerController {
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[0])
+                if (clickedDomino == history.verticalDominoes[0])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -332,7 +332,7 @@ public class AIController : PlayerController {
                         }
                     }
                 }
-                if (clickedDomino == historyController.verticalDominoes[verticalLen - 1])
+                if (clickedDomino == history.verticalDominoes[verticalLen - 1])
                 {
                     if (clickedDomino.leftValue == -1)
                     {
@@ -410,7 +410,7 @@ public class AIController : PlayerController {
         if (!HasCardToPlay())
         {
             //not first deal
-            if (historyController.horizontalDominoes.Count != 0 || historyController.verticalDominoes.Count != 0)
+            if (history.horizontalDominoes.Count != 0 || history.verticalDominoes.Count != 0)
             {
                 DrawDomino();
             }
