@@ -215,76 +215,80 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 // TOFIX System.ArgumentOutOfRangeException
-                if (clickedDomino == history.verticalDominoes[0])
+                if (history.verticalDominoes.Count != 0)
                 {
-                    if (clickedDomino.leftValue == -1)
+                    if (clickedDomino == history.verticalDominoes[0])
                     {
-                        if(chosenDomino.upperValue == clickedDomino.upperValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                        if (clickedDomino.leftValue == -1)
                         {
-                            chosenPlace = clickedDomino;
-                            chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_top,h_vertical,p_special");
-                            return;
+                            if(chosenDomino.upperValue == clickedDomino.upperValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_top,h_vertical,p_special");
+                                return;
+                            }
+                            else if (chosenDomino.upperValue == clickedDomino.upperValue || chosenDomino.lowerValue == clickedDomino.upperValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                if (chosenDomino.upperValue == clickedDomino.upperValue)
+                                    chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_top,h_vertical,p_normal");
+                                return;
+                            }
                         }
-                        else if (chosenDomino.upperValue == clickedDomino.upperValue || chosenDomino.lowerValue == clickedDomino.upperValue)
+                        else
                         {
-                            chosenPlace = clickedDomino;
-                            if (chosenDomino.upperValue == clickedDomino.upperValue)
-                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_top,h_vertical,p_normal");
-                            return;
+                            if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                if (chosenDomino.upperValue == clickedDomino.leftValue)
+                                    chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_top,h_horizontal,p_normal");
+                                return;
+                            }
                         }
                     }
-                    else
+                    if (clickedDomino == history.verticalDominoes[verticalLen-1])
                     {
-                        if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                        if (clickedDomino.leftValue == -1)
                         {
-                            chosenPlace = clickedDomino;
-                            if (chosenDomino.upperValue == clickedDomino.leftValue)
-                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_top,h_horizontal,p_normal");
-                            return;
+                            if(chosenDomino.upperValue == clickedDomino.lowerValue && chosenDomino.upperValue == chosenDomino.lowerValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_bottom,h_vertical,p_special");
+                                return;
+                            }
+                            else if (chosenDomino.upperValue == clickedDomino.lowerValue || chosenDomino.lowerValue == clickedDomino.lowerValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                if (chosenDomino.lowerValue == clickedDomino.lowerValue)
+                                    chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_bottom,h_vertical,p_normal");
+                                return;
+                            }
                         }
-                    }
+                        else
+                        {
+                            if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
+                            {
+                                chosenPlace = clickedDomino;
+                                if (chosenDomino.lowerValue == clickedDomino.leftValue)
+                                    chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
+                                PlayerPlayDomino();
+                                Debug.Log("excute h_bottom,h_horizontal,p_normal");
+                                return;
+                            }
+                        }
+                    }   
                 }
-                if (clickedDomino == history.verticalDominoes[verticalLen-1])
-                {
-                    if (clickedDomino.leftValue == -1)
-                    {
-                        if(chosenDomino.upperValue == clickedDomino.lowerValue && chosenDomino.upperValue == chosenDomino.lowerValue)
-                        {
-                            chosenPlace = clickedDomino;
-                            chosenDomino.SetLeftRightValues(chosenDomino.upperValue, chosenDomino.lowerValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_bottom,h_vertical,p_special");
-                            return;
-                        }
-                        else if (chosenDomino.upperValue == clickedDomino.lowerValue || chosenDomino.lowerValue == clickedDomino.lowerValue)
-                        {
-                            chosenPlace = clickedDomino;
-                            if (chosenDomino.lowerValue == clickedDomino.lowerValue)
-                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_bottom,h_vertical,p_normal");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        if (chosenDomino.upperValue == clickedDomino.leftValue || chosenDomino.lowerValue == clickedDomino.leftValue)
-                        {
-                            chosenPlace = clickedDomino;
-                            if (chosenDomino.lowerValue == clickedDomino.leftValue)
-                                chosenDomino.SetUpperLowerValues(chosenDomino.lowerValue, chosenDomino.upperValue);
-                            PlayerPlayDomino();
-                            Debug.Log("excute h_bottom,h_horizontal,p_normal");
-                            return;
-                        }
-                    }
-                }
+
             }
                 
 
@@ -712,18 +716,13 @@ public class PlayerController : MonoBehaviour
             if (history.verticalDominoes.Count != 0 || history.horizontalDominoes.Count != 0)
             {
                 DrawDomino();
-                if (!HasCardToPlay())
-                {
-                    gameController.PlayerIsBlocked(this);
-                    return;
-                }
             }
 
         }
-//        else
-//        {
-//            PlayerPlayDomino();
-//        }
+        else
+        {
+            PlayerPlayDomino();
+        }
 
                  
     }
@@ -794,6 +793,11 @@ public class PlayerController : MonoBehaviour
                         dominoControllers.Add(addedDomino);
                         AddDomino(); 
                     }
+                }
+                else
+                {
+                    gameController.PlayerIsBlocked(this);
+                    return;
                 }
             }
         }
