@@ -298,14 +298,15 @@ public class GameController : MonoBehaviour
         tile.Shuffle();
         player1.AddDomino();
         player2.AddDomino();
-        if (player.GetType() == typeof(AIController))
-        {
-            player2.PlayDomino();
-        }
-        else
-        {
-            player.PlayDomino();
-        }
+        player.PlayDomino();
+//        if (player.GetType() == typeof(AIController))
+//        {
+//            player2.PlayDomino();
+//        }
+//        else
+//        {
+//            player.PlayDomino();
+//        }
     }
 
     void ShowPlayerWin()

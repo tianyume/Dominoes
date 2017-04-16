@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace AI
 {
@@ -10,7 +11,6 @@ namespace AI
             List<ChosenWayToPlay> waysToPlay = new List<ChosenWayToPlay>();
             if (history.horizontalDominoes.Count == 0)
             {
-
                 foreach (DominoController domino in dominoControllers)
                 {
                     waysToPlay.Add(new ChosenWayToPlay(domino, null));
@@ -21,7 +21,7 @@ namespace AI
                 Dictionary<DominoController, List<DominoController>> placesToPlay = PlacesToPlay();
                 if (placesToPlay.Count == 0)
                 {
-                    // Draw dominoes
+                    // Draw dominoes until not blocked or no dominoes in tile
                     base.DrawDomino();
                     placesToPlay = PlacesToPlay();
                 }
@@ -45,6 +45,7 @@ namespace AI
             if (waysToPlay.Count == 0)
             {
                 gameController.PlayerIsBlocked(this);
+                return;
             }
 
             ChosenWayToPlay bestWayToPlay = waysToPlay[waysToPlay.Count - 1];
@@ -57,6 +58,7 @@ namespace AI
             {
                 Debug.Log("Chosen Place: " + bestWayToPlay.chosenPlace.leftValue + ", " + bestWayToPlay.chosenPlace.rightValue + ", " + bestWayToPlay.chosenPlace.upperValue + ", " + bestWayToPlay.chosenPlace.lowerValue);
             }
+            Debug.Log(Environment.StackTrace);
 
             gameController.PlayerPlayDomino(this, bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace);
         }
