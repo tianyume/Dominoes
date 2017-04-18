@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class GameController : MonoBehaviour
 {
-    private const int maxScore = 150000000;
+    public const int MaxScore = 10;
 
     public TileController tile;
     public HistoryController history;
@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public Text turnText;
     public Button playerVsGreedyButton;
     public Button greedyVsReinforcementButton;
+    public Button playAgainButton;
+    public Button mainMenuButton;
 
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
@@ -54,6 +56,14 @@ public class GameController : MonoBehaviour
         // Calculate the score of current play
         ScoreByCurrentPlay(player);
 
+        if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
+        {
+            ShowPlayerWin();
+            playAgainButton.gameObject.SetActive(true);
+            mainMenuButton.gameObject.SetActive(true);
+            return;
+        }
+
         // Ending a hand
         if (player.dominoControllers.Count == 0)
         {
@@ -67,9 +77,11 @@ public class GameController : MonoBehaviour
             {
                 ScoreByEndingHand(player, GetSumOfDominoInHand(player1));
             }
-            if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
+            if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
             {
                 ShowPlayerWin();
+                playAgainButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(true);
                 return;
             }
             ResetHand();
@@ -118,9 +130,11 @@ public class GameController : MonoBehaviour
             {
                 ScoreByEndingHand(player1, player2DominoSum - player1DominoSum);
             }
-            if (scoreOfPlayer1 >= maxScore || scoreOfPlayer2 >= maxScore)
+            if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
             {
                 ShowPlayerWin();
+                playAgainButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(true);
                 return;
             }
             // Reset a hand
@@ -344,5 +358,15 @@ public class GameController : MonoBehaviour
         // Start a hand
         StartHand(player1);
         turnText.text = "Player1's turn";
+    }
+
+    public void PlayAgainButtonOnClick()
+    {
+        
+    }
+
+    public void MainMenuButtonOnClick()
+    {
+        
     }
 }
