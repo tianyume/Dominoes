@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     public Text scoreText2;
     public Text winText;
     public Text turnText;
+    public Button playerVsGreedyButton;
+    public Button greedyVsReinforcementButton;
 
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
@@ -32,10 +34,6 @@ public class GameController : MonoBehaviour
         isPlayer2Blocked = false;
         scoreOfPlayer1 = 0;
         scoreOfPlayer2 = 0;
-
-        // Start a hand
-        StartHand(player1);
-        turnText.text = "Player1's turn";
     }
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
@@ -320,5 +318,31 @@ public class GameController : MonoBehaviour
         {
             winText.text = "Player2 Wins!";
         }        
+    }
+
+    public void PlayerVsGreedyButtonOnClick()
+    {
+        playerVsGreedyButton.gameObject.SetActive(false);
+        greedyVsReinforcementButton.gameObject.SetActive(false);
+        scoreText1.gameObject.SetActive(true);
+        scoreText2.gameObject.SetActive(true);
+        turnText.gameObject.SetActive(true);
+
+        // Start a hand
+        StartHand(player1);
+        turnText.text = "Player1's turn";
+    }
+
+    public void GreedyVsReinforcementOnClick()
+    {
+        playerVsGreedyButton.gameObject.SetActive(false);
+        greedyVsReinforcementButton.gameObject.SetActive(false);
+        scoreText1.gameObject.SetActive(true);
+        scoreText2.gameObject.SetActive(true);
+        turnText.gameObject.SetActive(true);
+
+        // Start a hand
+        StartHand(player1);
+        turnText.text = "Player1's turn";
     }
 }
