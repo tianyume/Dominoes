@@ -6,8 +6,15 @@ namespace AI
 {
     public class GreedyAIController : PlayerController
     {
-        public override void PlayDomino()
+        private bool shouldPlayDomino = false;
+
+        private void Update()
         {
+            if (!shouldPlayDomino)
+            {
+                return;
+            }
+            shouldPlayDomino = false;
             List<ChosenWayToPlay> waysToPlay = new List<ChosenWayToPlay>();
             if (history.horizontalDominoes.Count == 0)
             {
@@ -61,6 +68,11 @@ namespace AI
             Debug.Log(Environment.StackTrace);
 
             gameController.PlayerPlayDomino(this, bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace);
+        }
+
+        public override void PlayDomino()
+        {
+            shouldPlayDomino = true;
         }
 
         private Dictionary<DominoController, List<DominoController>> PlacesToPlay()
