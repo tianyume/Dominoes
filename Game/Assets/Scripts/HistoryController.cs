@@ -18,7 +18,7 @@ public class HistoryController : MonoBehaviour
     public float generalHorizontalOffset = 0.0f;
     public float generalVerticalOffset = 0.0f;
     public float upperBound = 3f, lowerBound = -3f;
-    public float leftBound = -9f, rightBound = 15f;
+    public float leftBound = -12f, rightBound = 15f;
     public Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
     public Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
 
@@ -27,6 +27,9 @@ public class HistoryController : MonoBehaviour
     public List<Vector3> verticalPositions;
     public List<Quaternion> horizontalRotations;
     public List<Quaternion> verticalRotations;
+
+    public Boolean isSpinnerOffset = false;
+    public float fixOffset = 0;
 
     public enum PutPosition
     {
@@ -147,8 +150,32 @@ public class HistoryController : MonoBehaviour
 
     void setGeneralOffset()
     {
-        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.6f * dominoScale * (Constants.dominoHeight + interval) + 1.2f;
+        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.5f * dominoScale * (Constants.dominoHeight + interval)+1.2f;
         //generalVerticalOffset = (float)(numberDown - numberUp) * 0.3f * dominoScale * (Constants.dominoHeight + interval);
+        if (isSpinnerOffset)
+        {
+            generalHorizontalOffset = fixOffset;
+        }
+        if (isSpinnerPlaced && !isSpinnerOffset)
+        {
+            int centerIndex = -1;
+            int spinnerIndex = -1;
+            for (int i = 0; i < horizontalDominoes.Count; i++)
+            {
+                if (horizontalDominoes[i] == center)
+                {
+                    centerIndex = i;
+                }
+                if (horizontalDominoes[i] == spinner)
+                {
+                    spinnerIndex = i;
+                }
+            }
+            generalHorizontalOffset = generalHorizontalOffset - (spinnerIndex - centerIndex) * 0.5f * dominoScale * (Constants.dominoHeight + interval);
+            fixOffset = generalHorizontalOffset;
+            isSpinnerOffset = true;
+        }
+
     }
 
     void resetBoundaryPosition()
@@ -449,5 +476,7 @@ public class HistoryController : MonoBehaviour
         horizontalRotations.Clear();
         verticalRotations.Clear();
         resetBoundaryPosition();
+        fixOffset = 0;
+        isSpinnerOffset = false;
     }
 }
