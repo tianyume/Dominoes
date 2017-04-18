@@ -138,6 +138,7 @@ public class GameController : MonoBehaviour
             {
                 StartHand(player1);
             }
+            return;
         }
 
         // Else continue

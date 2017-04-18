@@ -716,6 +716,10 @@ public class PlayerController : MonoBehaviour
             if (history.verticalDominoes.Count != 0 || history.horizontalDominoes.Count != 0)
             {
                 DrawDomino();
+                if (!HasCardToPlay())
+                {
+                    gameController.PlayerIsBlocked(this);
+                }
             }
 
         }
@@ -793,11 +797,6 @@ public class PlayerController : MonoBehaviour
                         dominoControllers.Add(addedDomino);
                         AddDomino(); 
                     }
-                }
-                else
-                {
-                    gameController.PlayerIsBlocked(this);
-                    return;
                 }
             }
         }
