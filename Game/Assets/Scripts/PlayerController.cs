@@ -720,6 +720,7 @@ public class PlayerController : MonoBehaviour
                 if (!HasCardToPlay())
                 {
                     gameController.PlayerIsBlocked(this);
+                    return;
                 }
             }
 
@@ -798,6 +799,10 @@ public class PlayerController : MonoBehaviour
                         dominoControllers.Add(addedDomino);
                         AddDomino(); 
                     }
+                }
+                else
+                {
+                    break;
                 }
             }
         }

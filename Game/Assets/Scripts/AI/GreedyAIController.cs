@@ -6,73 +6,87 @@ namespace AI
 {
     public class GreedyAIController : PlayerController
     {
-        private bool shouldPlayDomino = false;
+        enum NextState
+        {
+            Wait, Draw, Play
+        }
+        private NextState nextState;
+        Dictionary<DominoController, List<DominoController>> placesToPlay = null;
 
         private void Update()
         {
-            if (!shouldPlayDomino)
+            switch (nextState)
             {
-                return;
-            }
-            shouldPlayDomino = false;
-            List<ChosenWayToPlay> waysToPlay = new List<ChosenWayToPlay>();
-            if (history.horizontalDominoes.Count == 0)
-            {
-                foreach (DominoController domino in dominoControllers)
-                {
-                    waysToPlay.Add(new ChosenWayToPlay(domino, null));
-                }
-            }
-            else
-            {
-                Dictionary<DominoController, List<DominoController>> placesToPlay = PlacesToPlay();
-                if (placesToPlay.Count == 0)
-                {
-                    // Draw dominoes until not blocked or no dominoes in tile
-                    base.DrawDomino();
-                    placesToPlay = PlacesToPlay();
-                }
-
-                foreach (KeyValuePair<DominoController, List<DominoController>> entry in placesToPlay)
-                {
-                    List<DominoController> list = entry.Value;
-                    foreach (DominoController chosenPlace in list)
+                case NextState.Wait:
+                    return;
+                case NextState.Draw:
+                    if (history.horizontalDominoes.Count > 0)
                     {
-                        ChosenWayToPlay chosenWayToPlay = new ChosenWayToPlay(entry.Key, chosenPlace);
-                        waysToPlay.Add(chosenWayToPlay);
+                        placesToPlay = PlacesToPlay();
+                        if (placesToPlay.Count == 0)
+                        {
+                            base.DrawDomino();
+                            placesToPlay = PlacesToPlay();
+                            if (placesToPlay.Count == 0)
+                            {
+                                nextState = NextState.Wait;
+                                gameController.PlayerIsBlocked(this);
+                                return;
+                            }
+                        }
                     }
-                }
-            }
-            // From small to large
-            waysToPlay.Sort(delegate (ChosenWayToPlay x, ChosenWayToPlay y) {
-                int xScore = GetScoreOfChosenWay(x);
-                int yScore = GetScoreOfChosenWay(y);
-                return xScore - yScore;
-            });
-            if (waysToPlay.Count == 0)
-            {
-                gameController.PlayerIsBlocked(this);
-                return;
-            }
+                    nextState = NextState.Play;
+                    break;
+                case NextState.Play:
+                    List<ChosenWayToPlay> waysToPlay = new List<ChosenWayToPlay>();
+                    if (history.horizontalDominoes.Count == 0)
+                    {
+                        foreach (DominoController domino in dominoControllers)
+                        {
+                            waysToPlay.Add(new ChosenWayToPlay(domino, null));
+                        }
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<DominoController, List<DominoController>> entry in placesToPlay)
+                        {
+                            List<DominoController> list = entry.Value;
+                            foreach (DominoController chosenPlace in list)
+                            {
+                                ChosenWayToPlay chosenWayToPlay = new ChosenWayToPlay(entry.Key, chosenPlace);
+                                waysToPlay.Add(chosenWayToPlay);
+                            }
+                        }
+                    }
+                    // From small to large
+                    waysToPlay.Sort(delegate (ChosenWayToPlay x, ChosenWayToPlay y)
+                        {
+                            int xScore = GetScoreOfChosenWay(x);
+                            int yScore = GetScoreOfChosenWay(y);
+                            return xScore - yScore;
+                        });
 
-            ChosenWayToPlay bestWayToPlay = waysToPlay[waysToPlay.Count - 1];
-            PlaceDomino(bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace, history);
-            dominoControllers.Remove(bestWayToPlay.chosenDomino);
+                    ChosenWayToPlay bestWayToPlay = waysToPlay[waysToPlay.Count - 1];
+                    PlaceDomino(bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace, history);
+                    dominoControllers.Remove(bestWayToPlay.chosenDomino);
 
-            // Debug
-            Debug.Log("Chosen Domino: " + bestWayToPlay.chosenDomino.leftValue + ", " + bestWayToPlay.chosenDomino.rightValue + ", " + bestWayToPlay.chosenDomino.upperValue + ", " + bestWayToPlay.chosenDomino.lowerValue);
-            if (bestWayToPlay.chosenPlace != null)
-            {
-                Debug.Log("Chosen Place: " + bestWayToPlay.chosenPlace.leftValue + ", " + bestWayToPlay.chosenPlace.rightValue + ", " + bestWayToPlay.chosenPlace.upperValue + ", " + bestWayToPlay.chosenPlace.lowerValue);
+                    // Debug
+                    Debug.Log("Chosen Domino: " + bestWayToPlay.chosenDomino.leftValue + ", " + bestWayToPlay.chosenDomino.rightValue + ", " + bestWayToPlay.chosenDomino.upperValue + ", " + bestWayToPlay.chosenDomino.lowerValue);
+                    if (bestWayToPlay.chosenPlace != null)
+                    {
+                        Debug.Log("Chosen Place: " + bestWayToPlay.chosenPlace.leftValue + ", " + bestWayToPlay.chosenPlace.rightValue + ", " + bestWayToPlay.chosenPlace.upperValue + ", " + bestWayToPlay.chosenPlace.lowerValue);
+                    }
+                    Debug.Log(Environment.StackTrace);
+
+                    nextState = NextState.Wait;
+                    gameController.PlayerPlayDomino(this, bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace);
+                    break;
             }
-            Debug.Log(Environment.StackTrace);
-
-            gameController.PlayerPlayDomino(this, bestWayToPlay.chosenDomino, bestWayToPlay.chosenPlace);
         }
 
         public override void PlayDomino()
         {
-            shouldPlayDomino = true;
+            nextState = NextState.Draw;
         }
 
         private Dictionary<DominoController, List<DominoController>> PlacesToPlay()

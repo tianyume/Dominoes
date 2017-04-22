@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class GameController : MonoBehaviour
 {
-    public const int MaxScore = 10;
+    public const int MaxScore = 10000;
 
     public TileController tile;
     public HistoryController history;
