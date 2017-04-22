@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private const int kNumberOfCardsToDraw = 7;
 
     public GameController gameController;
-    public List<DominoController> dominoControllers;
+    public List<DominoController> dominoControllers = new List<DominoController>(28);
     public TileController tileController;
 
 
@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
     {
-        dominoControllers = new List<DominoController>(28);
+//        dominoControllers = new List<DominoController>(28);
+
 //        tileController.Shuffle();
 //        dominoControllers.Add(tileController.Deal());
 //        dominoControllers[0].GetComponent<Transform>().transform.position.x = new Vector3(0, 0, 0);

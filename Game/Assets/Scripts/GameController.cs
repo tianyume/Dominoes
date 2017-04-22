@@ -9,8 +9,10 @@ public class GameController : MonoBehaviour
 
     public TileController tile;
     public HistoryController history;
-    public PlayerController player1;
-    public PlayerController player2;
+    public PlayerController humanPlayer1;
+    public PlayerController humanPlayer2;
+    public PlayerController greedyAI1;
+    public PlayerController greedyAI2;
     public Text scoreText1;
     public Text scoreText2;
     public Text winText;
@@ -20,6 +22,8 @@ public class GameController : MonoBehaviour
     public Button playAgainButton;
     public Button mainMenuButton;
 
+    private PlayerController player1;
+    private PlayerController player2;
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
     private int scoreOfPlayer1;
@@ -29,13 +33,11 @@ public class GameController : MonoBehaviour
     {
         Assert.IsNotNull(tile);
         Assert.IsNotNull(history);
-        Assert.IsNotNull(player1);
-        Assert.IsNotNull(player2);
+        Assert.IsNotNull(humanPlayer1);
+        Assert.IsNotNull(humanPlayer2);
+        Assert.IsNotNull(greedyAI1);
+        Assert.IsNotNull(greedyAI2);
 
-        isPlayer1Blocked = false;
-        isPlayer2Blocked = false;
-        scoreOfPlayer1 = 0;
-        scoreOfPlayer2 = 0;
     }
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
@@ -334,6 +336,14 @@ public class GameController : MonoBehaviour
         }        
     }
 
+    void Reset()
+    {
+        isPlayer1Blocked = false;
+        isPlayer2Blocked = false;
+        scoreOfPlayer1 = 0;
+        scoreOfPlayer2 = 0;
+    }
+
     public void PlayerVsGreedyButtonOnClick()
     {
         playerVsGreedyButton.gameObject.SetActive(false);
@@ -341,6 +351,21 @@ public class GameController : MonoBehaviour
         scoreText1.gameObject.SetActive(true);
         scoreText2.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
+
+        if (player1 != null)
+        {
+            player1.gameObject.SetActive(false);
+        }
+        if (player2 != null)
+        {
+            player2.gameObject.SetActive(false);
+        }
+        player1 = humanPlayer1;
+        player2 = greedyAI2;
+        player1.gameObject.SetActive(true);
+        player2.gameObject.SetActive(true);
+
+        Reset();
 
         // Start a hand
         StartHand(player1);
@@ -355,6 +380,21 @@ public class GameController : MonoBehaviour
         scoreText2.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
 
+        if (player1 != null)
+        {
+            player1.gameObject.SetActive(false);
+        }
+        if (player2 != null)
+        {
+            player2.gameObject.SetActive(false);
+        }
+        player1 = greedyAI1;
+        player2 = greedyAI2;
+        player1.gameObject.SetActive(true);
+        player2.gameObject.SetActive(true);
+
+        Reset();
+
         // Start a hand
         StartHand(player1);
         turnText.text = "Player1's turn";
@@ -362,11 +402,27 @@ public class GameController : MonoBehaviour
 
     public void PlayAgainButtonOnClick()
     {
-        
+        winText.text = "";
+        playAgainButton.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+
+        Reset();
+
+        // Start a hand
+        StartHand(player1);
+        turnText.text = "Player1's turn";
     }
 
     public void MainMenuButtonOnClick()
     {
-        
+        winText.text = "";
+        playAgainButton.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+        scoreText1.gameObject.SetActive(false);
+        scoreText2.gameObject.SetActive(false);
+        turnText.gameObject.SetActive(false);
+        playerVsGreedyButton.gameObject.SetActive(true);
+        greedyVsReinforcementButton.gameObject.SetActive(true);
+        ResetHand();
     }
 }
