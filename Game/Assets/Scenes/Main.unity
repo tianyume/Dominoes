@@ -1229,6 +1229,7 @@ MonoBehaviour:
   rightMost: {x: 0, y: 0, z: 0}
   upMost: {x: 0, y: 0, z: 0}
   downMost: {x: 0, y: 0, z: 0}
+  mainCamera: {fileID: 224989671}
   horizontalPositions: []
   verticalPositions: []
   horizontalRotations: []
@@ -1289,6 +1290,7 @@ MonoBehaviour:
   greedyVsReinforcementButton: {fileID: 1978214476}
   playAgainButton: {fileID: 2075716871}
   mainMenuButton: {fileID: 641598613}
+  mainCamera: {fileID: 224989671}
 --- !u!4 &1448602198
 Transform:
   m_ObjectHideFlags: 0

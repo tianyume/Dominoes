@@ -21,6 +21,7 @@ public class HistoryController : MonoBehaviour
     public float leftBound = -12f, rightBound = 15f;
     public Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
     public Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
+    public Camera mainCamera;
 
     // store origin position and rotations
     public List<Vector3> horizontalPositions;
@@ -123,6 +124,10 @@ public class HistoryController : MonoBehaviour
         Debug.Log(playedDomino.leftValue + " " + playedDomino.rightValue);
         playedDomino.transform.RotateAround(pos, new Vector3(0, 0, 1), -90f);
         Debug.Log("after rotate: " + playedDomino.transform.position.x + " " + playedDomino.transform.position.y);
+        if (playedDomino.transform.position.y < -8f || playedDomino.transform.position.y > 8f)
+        {
+            mainCamera.orthographicSize += 0.1f;
+        }
     }
 
     void countPositionNumber(PutPosition putPosition)

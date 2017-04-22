@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public Button greedyVsReinforcementButton;
     public Button playAgainButton;
     public Button mainMenuButton;
+    public Camera mainCamera;
 
     private PlayerController player1;
     private PlayerController player2;
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour
         Assert.IsNotNull(greedyAI1);
         Assert.IsNotNull(greedyAI2);
 
+//        mainCamera.orthographicSize = 10f;
     }
 
     public void PlayerPlayDomino(PlayerController player, DominoController domino, DominoController anotherDomino)
@@ -322,6 +324,8 @@ public class GameController : MonoBehaviour
 //        {
 //            player.PlayDomino();
 //        }
+
+        mainCamera.orthographicSize = 10f;
     }
 
     void ShowPlayerWin()
