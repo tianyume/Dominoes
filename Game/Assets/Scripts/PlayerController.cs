@@ -691,7 +691,7 @@ public class PlayerController : MonoBehaviour
                 domino.transform.position = new Vector3(cnt++, startPosition1, 0);
                 domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
-                if (this.GetType() == typeof(AI.GreedyAIController))
+                if (this.GetType() != typeof(PlayerController))
                 {
                     domino.isObservableByAll = false;
                 }
@@ -706,7 +706,7 @@ public class PlayerController : MonoBehaviour
                 domino.transform.position = new Vector3(cnt++, startPosition2, 0);
                 domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
-                if (this.GetType() == typeof(AI.GreedyAIController))
+                if (this.GetType() != typeof(PlayerController))
                 {
                     domino.isObservableByAll = false;
                 }
