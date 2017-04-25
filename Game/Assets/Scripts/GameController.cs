@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public Text turnText;
     public Text P1update;
     public Text P2update;
+    public Text Rounds, P1Wins, P2Wins;
     public Image P1;
     public Image P2;
     public Button playerVsGreedyButton;
@@ -35,6 +36,13 @@ public class GameController : MonoBehaviour
     private PlayerController player2;
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
+
+    private int TestTimes = 50;
+    private int Round = 1;
+    private int P1count = 0;
+    private int P2count = 0;
+    private int P1count2 = 0;
+    private int P2count2 = 0;
 
     void Start()
     {
@@ -71,9 +79,43 @@ public class GameController : MonoBehaviour
         if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
         {
             ShowPlayerWin();
-            playAgainButton.gameObject.SetActive(true);
-            mainMenuButton.gameObject.SetActive(true);
-            return;
+            if (Round <= TestTimes)
+            {                                       
+                Rounds.text = "Round:" + Round;
+                if (scoreOfPlayer1 >= scoreOfPlayer2)
+                {
+                    if (Round < TestTimes / 2)
+                    {
+                        P1count++;
+                    }
+                    else
+                    {
+                        P1count2++;
+                    }
+                    P1Wins.text = "Player1 Wins:" + P1count + "," + P1count2;
+                }
+                else
+                {
+                    if (Round < TestTimes / 2)
+                    {
+                        P2count++;
+                    }
+                    else
+                    {
+                        P2count2++;
+                    }
+                    P2Wins.text = "Player2 Wins:" + P2count + "," + P2count2;
+                }
+                Round = Round + 1;
+                PlayAgainButtonOnClick();
+                return;
+            }
+            else
+            {
+                playAgainButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(true);
+                return;
+            }
         }
 
         // Ending a hand
@@ -92,9 +134,43 @@ public class GameController : MonoBehaviour
             if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
             {
                 ShowPlayerWin();
-                playAgainButton.gameObject.SetActive(true);
-                mainMenuButton.gameObject.SetActive(true);
-                return;
+                if (Round <= TestTimes)
+                {                                       
+                    Rounds.text = "Round:" + Round;
+                    if (scoreOfPlayer1 >= scoreOfPlayer2)
+                    {
+                        if (Round < TestTimes / 2)
+                        {
+                            P1count++;
+                        }
+                        else
+                        {
+                            P1count2++;
+                        }
+                        P1Wins.text = "Player1 Wins:" + P1count + "," + P1count2;
+                    }
+                    else
+                    {
+                        if (Round < TestTimes / 2)
+                        {
+                            P2count++;
+                        }
+                        else
+                        {
+                            P2count2++;
+                        }
+                        P2Wins.text = "Player2 Wins:" + P2count + "," + P2count2;
+                    }
+                    Round = Round + 1;
+                    PlayAgainButtonOnClick();
+                    return;
+                }
+                else
+                {
+                    playAgainButton.gameObject.SetActive(true);
+                    mainMenuButton.gameObject.SetActive(true);
+                    return;
+                }
             }
             ResetHand();
             StartHand(player);
@@ -145,9 +221,43 @@ public class GameController : MonoBehaviour
             if (scoreOfPlayer1 >= MaxScore || scoreOfPlayer2 >= MaxScore)
             {
                 ShowPlayerWin();
-                playAgainButton.gameObject.SetActive(true);
-                mainMenuButton.gameObject.SetActive(true);
-                return;
+                if (Round <= TestTimes)
+                {                                       
+                    Rounds.text = "Round:" + Round;
+                    if (scoreOfPlayer1 >= scoreOfPlayer2)
+                    {
+                        if (Round < TestTimes / 2)
+                        {
+                            P1count++;
+                        }
+                        else
+                        {
+                            P1count2++;
+                        }
+                        P1Wins.text = "Player1 Wins:" + P1count + "," + P1count2;
+                    }
+                    else
+                    {
+                        if (Round < TestTimes / 2)
+                        {
+                            P2count++;
+                        }
+                        else
+                        {
+                            P2count2++;
+                        }
+                        P2Wins.text = "Player2 Wins:" + P2count + "," + P2count2;
+                    }
+                    Round = Round + 1;
+                    PlayAgainButtonOnClick();
+                    return;
+                }
+                else
+                {
+                    playAgainButton.gameObject.SetActive(true);
+                    mainMenuButton.gameObject.SetActive(true);
+                    return;
+                }
             }
             // Reset a hand
             ResetHand();
@@ -419,6 +529,7 @@ public class GameController : MonoBehaviour
         }
         player1 = greedyAI1;
         player2 = reinforcementAI2;
+//        player2 = greedyAI2;
         player1.gameObject.SetActive(true);
         player2.gameObject.SetActive(true);
 
@@ -426,8 +537,10 @@ public class GameController : MonoBehaviour
         ResetHand();
 
         // Start a hand
-        StartHand(player1);
-        turnText.text = "Player1's turn";
+//        StartHand(player1);
+//        turnText.text = "Player1's turn";
+        StartHand(player2);
+        turnText.text = "Player2's turn";
     }
 
     public void PlayAgainButtonOnClick()
