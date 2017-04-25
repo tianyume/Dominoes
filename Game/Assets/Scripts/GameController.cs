@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public Text scoreText2;
     public Text winText;
     public Text turnText;
+    public Text P1update;
+    public Text P2update;
     public Image P1;
     public Image P2;
     public Button playerVsGreedyButton;
@@ -183,10 +185,16 @@ public class GameController : MonoBehaviour
             if (player == player1)
             {
                 scoreOfPlayer1 += sum;
+                P1update.text = "+" + sum;
+                P1update.canvasRenderer.SetAlpha(1f);
+                P1update.CrossFadeAlpha(0f, 1f, true);
             }
             else
             {
                 scoreOfPlayer2 += sum;
+                P2update.text = "+" + sum;
+                P2update.canvasRenderer.SetAlpha(1f);
+                P2update.CrossFadeAlpha(0f, 1f, true);
             }
             UpdateScoreTexts();
         }
@@ -205,10 +213,16 @@ public class GameController : MonoBehaviour
         if (player == player1)
         {
             scoreOfPlayer1 += score;
+            P1update.text = "+" + score;
+            P1update.canvasRenderer.SetAlpha(1f);
+            P1update.CrossFadeAlpha(0f, 1f, true);
         }
         else
         {
             scoreOfPlayer2 += score;
+            P2update.text = "+" + score;
+            P2update.canvasRenderer.SetAlpha(1f);
+            P2update.CrossFadeAlpha(0f, 1f, true);
         }
         UpdateScoreTexts();
     }
