@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class GameController : MonoBehaviour
 {
-    public const int MaxScore = 150;
+    public const int MaxScore = 1500;
 
     public int scoreOfPlayer1 { get; private set; }
     public int scoreOfPlayer2 { get; private set; }

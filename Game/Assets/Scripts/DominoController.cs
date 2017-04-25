@@ -63,6 +63,7 @@ public class DominoController : MonoBehaviour
     public DominoFactoryController dominoFactory;
     public bool isObservableByAll=true;
     public GameRole ownership;
+    public static float dominoScale = 1.5f;
 
     public Direction direction;
 
@@ -98,7 +99,7 @@ public class DominoController : MonoBehaviour
         {
             if (direction == Direction.Vertical)
             {
-                if (position.x <= beforeClickPositionX + Constants.dominoWidth / 2 && position.x >= beforeClickPositionX - Constants.dominoWidth / 2 && position.y <= beforeClickPositionY + Constants.dominoHeight / 2 && position.y >= beforeClickPositionY - Constants.dominoHeight / 2)
+                if (position.x <= beforeClickPositionX + Constants.dominoWidth*dominoScale / 2 && position.x >= beforeClickPositionX - Constants.dominoWidth*dominoScale / 2 && position.y <= beforeClickPositionY + Constants.dominoHeight*dominoScale / 2 && position.y >= beforeClickPositionY - Constants.dominoHeight*dominoScale / 2)
                 {
                     if (onClick != null)
                     {
@@ -109,7 +110,7 @@ public class DominoController : MonoBehaviour
             }
             else
             {
-                if (position.x <= beforeClickPositionX + Constants.dominoHeight / 2 && position.x >= beforeClickPositionX - Constants.dominoHeight / 2 && position.y <= beforeClickPositionY + Constants.dominoWidth / 2 && position.y >= beforeClickPositionY - Constants.dominoWidth / 2)
+                if (position.x <= beforeClickPositionX + Constants.dominoHeight*dominoScale / 2 && position.x >= beforeClickPositionX - Constants.dominoHeight*dominoScale / 2 && position.y <= beforeClickPositionY + Constants.dominoWidth*dominoScale / 2 && position.y >= beforeClickPositionY - Constants.dominoWidth*dominoScale / 2)
                 {
                     if (onClick != null)
                     {
