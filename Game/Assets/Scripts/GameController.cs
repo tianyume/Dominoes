@@ -7,12 +7,16 @@ public class GameController : MonoBehaviour
 {
     public const int MaxScore = 150;
 
+    public int scoreOfPlayer1 { get; private set; }
+    public int scoreOfPlayer2 { get; private set; }
     public TileController tile;
     public HistoryController history;
     public PlayerController humanPlayer1;
     public PlayerController humanPlayer2;
     public PlayerController greedyAI1;
     public PlayerController greedyAI2;
+    public PlayerController reinforcementAI1;
+    public PlayerController reinforcementAI2;
     public Text scoreText1;
     public Text scoreText2;
     public Text winText;
@@ -31,8 +35,6 @@ public class GameController : MonoBehaviour
     private PlayerController player2;
     private bool isPlayer1Blocked;
     private bool isPlayer2Blocked;
-    private int scoreOfPlayer1;
-    private int scoreOfPlayer2;
 
     void Start()
     {
@@ -416,7 +418,7 @@ public class GameController : MonoBehaviour
             player2.gameObject.SetActive(false);
         }
         player1 = greedyAI1;
-        player2 = greedyAI2;
+        player2 = reinforcementAI2;
         player1.gameObject.SetActive(true);
         player2.gameObject.SetActive(true);
 

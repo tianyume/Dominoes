@@ -670,7 +670,7 @@ public class PlayerController : MonoBehaviour
 
 
     // For Tile
-    public void AddDomino()
+    public virtual void AddDomino()
     {
         // TOFIX
 //        dominoControllers.AddRange(tileController.Deal());
