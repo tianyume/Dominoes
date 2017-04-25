@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public int startPosition2 = 8;
     public string playerName;
     private int cnt;
-    float dominoScale = 1.2f;
+    float dominoScale = 1.5f;
     private bool isFirstDeal = true;
 
     bool drawFlag=false;
@@ -691,6 +691,10 @@ public class PlayerController : MonoBehaviour
                 domino.transform.position = new Vector3(cnt++, startPosition1, 0);
                 domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
+                if (this.GetType() == typeof(AI.GreedyAIController))
+                {
+                    domino.isObservableByAll = false;
+                }
             }
         }
         else if(playerName == "player2")
@@ -702,6 +706,10 @@ public class PlayerController : MonoBehaviour
                 domino.transform.position = new Vector3(cnt++, startPosition2, 0);
                 domino.transform.localScale = new Vector3(dominoScale, dominoScale, 0);
                 domino.onClick = DominoOnClick;
+                if (this.GetType() == typeof(AI.GreedyAIController))
+                {
+                    domino.isObservableByAll = false;
+                }
             }
         }
            

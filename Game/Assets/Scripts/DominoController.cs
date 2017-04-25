@@ -61,7 +61,7 @@ public class DominoController : MonoBehaviour
     };
 
     public DominoFactoryController dominoFactory;
-    public bool isObservableByAll;
+    public bool isObservableByAll=true;
     public GameRole ownership;
 
     public Direction direction;
@@ -119,7 +119,14 @@ public class DominoController : MonoBehaviour
                 }
             }
         }
-        GetComponent<SpriteRenderer>().sprite = dominoFactory.CloneSprite(spriteIndex);
+        if (isObservableByAll)
+        {
+            GetComponent<SpriteRenderer>().sprite = dominoFactory.CloneSprite(spriteIndex);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = dominoFactory.CloneSprite(29);
+        }
         //if (Input.GetMouseButtonUp(0))
         //{
         //    isPicked = false;

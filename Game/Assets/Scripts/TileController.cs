@@ -55,6 +55,7 @@ public class TileController : MonoBehaviour
                     DominoController temp = (DominoController)Instantiate(exampleDomino);
                     temp.ownership = GameRole.Player1;
                     temp.SetUpperLowerValues(dominoes[i].upperValue, dominoes[i].lowerValue);
+                    temp.isObservableByAll = true;
                     return temp;
                 }
             }

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class GameController : MonoBehaviour
 {
-    public const int MaxScore = 10000;
+    public const int MaxScore = 150;
 
     public TileController tile;
     public HistoryController history;
@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public Text scoreText2;
     public Text winText;
     public Text turnText;
+    public Image P1;
+    public Image P2;
     public Button playerVsGreedyButton;
     public Button greedyVsReinforcementButton;
     public Button playAgainButton;
@@ -38,6 +40,8 @@ public class GameController : MonoBehaviour
         Assert.IsNotNull(humanPlayer2);
         Assert.IsNotNull(greedyAI1);
         Assert.IsNotNull(greedyAI2);
+        Assert.IsNotNull(P1);
+        Assert.IsNotNull(P2);
 
 //        mainCamera.orthographicSize = 10f;
     }
@@ -355,6 +359,8 @@ public class GameController : MonoBehaviour
         scoreText1.gameObject.SetActive(true);
         scoreText2.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
+        P1.gameObject.SetActive(true);
+        P2.gameObject.SetActive(true);
 
         if (player1 != null)
         {
@@ -370,6 +376,7 @@ public class GameController : MonoBehaviour
         player2.gameObject.SetActive(true);
 
         Reset();
+        ResetHand();
 
         // Start a hand
         StartHand(player1);
@@ -383,6 +390,8 @@ public class GameController : MonoBehaviour
         scoreText1.gameObject.SetActive(true);
         scoreText2.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
+        P1.gameObject.SetActive(true);
+        P2.gameObject.SetActive(true);
 
         if (player1 != null)
         {
@@ -398,6 +407,7 @@ public class GameController : MonoBehaviour
         player2.gameObject.SetActive(true);
 
         Reset();
+        ResetHand();
 
         // Start a hand
         StartHand(player1);
@@ -411,6 +421,7 @@ public class GameController : MonoBehaviour
         mainMenuButton.gameObject.SetActive(false);
 
         Reset();
+        ResetHand();
 
         // Start a hand
         StartHand(player1);
@@ -425,8 +436,11 @@ public class GameController : MonoBehaviour
         scoreText1.gameObject.SetActive(false);
         scoreText2.gameObject.SetActive(false);
         turnText.gameObject.SetActive(false);
+        P1.gameObject.SetActive(false);
+        P2.gameObject.SetActive(false);
         playerVsGreedyButton.gameObject.SetActive(true);
         greedyVsReinforcementButton.gameObject.SetActive(true);
+        Reset();
         ResetHand();
     }
 }

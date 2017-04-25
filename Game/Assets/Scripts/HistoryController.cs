@@ -5,7 +5,7 @@ using UnityEngine;
 public class HistoryController : MonoBehaviour
 {
     public float interval = 0.08f;
-    public float dominoScale = 1.2f;
+    public float dominoScale = 1.5f;
     public float startPositionX = 0.0f;
     public float startPositionY = 0.0f;
     public DominoController spinner;
@@ -124,10 +124,6 @@ public class HistoryController : MonoBehaviour
         Debug.Log(playedDomino.leftValue + " " + playedDomino.rightValue);
         playedDomino.transform.RotateAround(pos, new Vector3(0, 0, 1), -90f);
         Debug.Log("after rotate: " + playedDomino.transform.position.x + " " + playedDomino.transform.position.y);
-        if (playedDomino.transform.position.y < -8f || playedDomino.transform.position.y > 8f)
-        {
-            mainCamera.orthographicSize += 0.1f;
-        }
     }
 
     void countPositionNumber(PutPosition putPosition)
@@ -198,6 +194,7 @@ public class HistoryController : MonoBehaviour
         {
             throw new ArgumentNullException("playedDomino");
         }
+        playedDomino.isObservableByAll = true;
 
         if (historyDomino == null)
         {
@@ -436,6 +433,12 @@ public class HistoryController : MonoBehaviour
             {
                 SetRotateDomino(horizontalDominoes[i], new Vector3(rightMost.x + 0.5f * dominoScale * Constants.dominoWidth, rightMost.y));
             }
+        }
+        float camSize = mainCamera.orthographicSize;
+        if (horizontalDominoes[0].transform.position.y > camSize-2 
+            || horizontalDominoes[horizontalDominoes.Count-1].transform.position.y < -camSize+2)
+        {
+            mainCamera.orthographicSize += 0.5f;
         }
         for (int i = 0; i < verticalDominoes.Count; i++)
         {
