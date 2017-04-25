@@ -5,7 +5,7 @@ using UnityEngine;
 public class HistoryController : MonoBehaviour
 {
     public float interval = 0.08f;
-    public float dominoScale = 1.5f;
+    public float dominoScale;
     public float startPositionX = 0.0f;
     public float startPositionY = 0.0f;
     public DominoController spinner;
@@ -18,7 +18,7 @@ public class HistoryController : MonoBehaviour
     public float generalHorizontalOffset = 0.0f;
     public float generalVerticalOffset = 0.0f;
     public float upperBound = 3f, lowerBound = -3f;
-    public float leftBound = -12f, rightBound = 15f;
+    public float leftBound = -10f, rightBound = 10f;
     public Vector3 leftMost = Vector3.zero, rightMost = Vector3.zero;
     public Vector3 upMost = Vector3.zero, downMost = Vector3.zero;
     public Camera mainCamera;
@@ -151,7 +151,7 @@ public class HistoryController : MonoBehaviour
 
     void setGeneralOffset()
     {
-        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.5f * dominoScale * (Constants.dominoHeight + interval)+1.2f;
+        generalHorizontalOffset = (float)(numberLeft - numberRight) * 0.5f * dominoScale * (Constants.dominoHeight + interval)+0f;
         //generalVerticalOffset = (float)(numberDown - numberUp) * 0.3f * dominoScale * (Constants.dominoHeight + interval);
         if (isSpinnerOffset)
         {
@@ -438,7 +438,7 @@ public class HistoryController : MonoBehaviour
         if (horizontalDominoes[0].transform.position.y > camSize-2 
             || horizontalDominoes[horizontalDominoes.Count-1].transform.position.y < -camSize+2)
         {
-            mainCamera.orthographicSize += 0.5f;
+            mainCamera.orthographicSize += 1f;
         }
         for (int i = 0; i < verticalDominoes.Count; i++)
         {
